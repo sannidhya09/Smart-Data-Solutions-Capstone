@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(\"c:/Users/theti/OneDrive/Desktop/SDS Capstone/SDS Capstone Code/.venv/Scripts/pip.exe\" install python-dotenv requests --quiet)"
+    ]
+  }
+}

@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base ─────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background-color: #07021A;
+  color: #F0EBF8;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: #0D0520; }
+::-webkit-scrollbar-thumb { background: #2E1A6A; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #4A2D9E; }
+
+/* ── Grid dot pattern ─────────────────────────────────────── */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(91,53,196,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(91,53,196,0.1) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 88px 88px, 88px 88px, 22px 22px, 22px 22px;
+}
+
+/* ── Glass card ───────────────────────────────────────────── */
+.glass {
+  background: rgba(26, 15, 60, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(78, 45, 158, 0.35);
+}
+
+.glass-hover {
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+.glass-hover:hover {
+  border-color: rgba(255, 102, 48, 0.35);
+  box-shadow: 0 0 24px rgba(255, 102, 48, 0.08);
+  transform: translateY(-2px);
+}
+
+/* ── Orange gradient text ─────────────────────────────────── */
+.text-gradient-orange {
+  background: linear-gradient(135deg, #FF6630, #FF8C58);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-purple {
+  background: linear-gradient(135deg, #9B75FF, #C4A8FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Orange accent line ───────────────────────────────────── */
+.accent-line {
+  position: relative;
+}
+.accent-line::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, #FF6630, transparent);
+  border-radius: 2px;
+}
+
+/* ── Metric card ──────────────────────────────────────────── */
+.metric-card {
+  position: relative;
+  overflow: hidden;
+  background: rgba(26, 15, 60, 0.9);
+  border: 1px solid rgba(78, 45, 158, 0.4);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+.metric-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,102,48,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.metric-card:hover {
+  border-color: rgba(255, 102, 48, 0.4);
+  box-shadow: 0 8px 32px rgba(255, 102, 48, 0.12);
+  transform: translateY(-3px);
+}
+
+/* ── Progress bar ─────────────────────────────────────────── */
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  animation: countBar 1.4s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+@keyframes countBar {
+  from { width: 0%; }
+  to   { width: var(--bar-w, 0%); }
+}
+
+/* ── Nav item active glow ─────────────────────────────────── */
+.nav-active {
+  background: rgba(255,102,48,0.12);
+  border-left: 3px solid #FF6630;
+  color: #FF8C58;
+}
+
+/* ── Status badge ─────────────────────────────────────────── */
+.badge-present {
+  background: rgba(155,117,255,0.15);
+  color: #C4A8FF;
+  border: 1px solid rgba(155,117,255,0.3);
+}
+.badge-partial {
+  background: rgba(255,140,88,0.15);
+  color: #FF8C58;
+  border: 1px solid rgba(255,140,88,0.35);
+}
+.badge-missing {
+  background: rgba(255,102,48,0.15);
+  color: #FF6630;
+  border: 1px solid rgba(255,102,48,0.4);
+}
+
+/* ── Red Duke avatar ring ─────────────────────────────────── */
+.duke-ring {
+  box-shadow: 0 0 0 2px rgba(255,102,48,0.5), 0 0 16px rgba(255,102,48,0.2);
+}
+
+/* ── Page transition ──────────────────────────────────────── */
+.page-enter {
+  animation: fadeInUp 0.45s ease-out;
+}
+
+/* ── Table row hover ──────────────────────────────────────── */
+.table-row-hover:hover {
+  background: rgba(255,102,48,0.04);
+}
+
+/* ── Shimmer effect ───────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0) 25%,
+    rgba(255,255,255,0.06) 50%,
+    rgba(255,255,255,0) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite;
+}
+
+/* ── Scan line ────────────────────────────────────────────── */
+.scan-container {
+  position: relative;
+  overflow: hidden;
+}
+.scan-container::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,102,48,0.6), transparent);
+  animation: scanLine 3.5s ease-in-out infinite;
+}
+
+/* ── Sidebar background ───────────────────────────────────── */
+.sidebar-bg {
+  background: linear-gradient(180deg, #0D0520 0%, #120828 50%, #0D0520 100%);
+  border-right: 1px solid rgba(46, 26, 106, 0.6);
+}
+
+/* ── Initial hidden for stagger ──────────────────────────── */
+.opacity-0-init { opacity: 0; }

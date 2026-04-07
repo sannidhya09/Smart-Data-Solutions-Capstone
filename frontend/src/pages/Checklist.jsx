@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { ClipboardCheck, Search, CheckCircle2, Clock, XCircle, ChevronDown } from 'lucide-react'
+import React, { useState } from 'react'
+import { ClipboardCheck, Search, CheckCircle2, Clock, XCircle, ChevronDown, ChevronRight, Download, FileText, Quote } from 'lucide-react'
 import { useAnalysis } from '../App'
 
 const STATUS_CFG = {
@@ -48,6 +48,7 @@ export default function Checklist() {
   const [statusFilter, setStatusFilter] = useState('ALL')
   const [stageFilter,  setStageFilter]  = useState('ALL')
   const [search,       setSearch]       = useState('')
+  const [expandedRow,  setExpandedRow]  = useState(null)
 
   if (!data) return null
 
@@ -81,15 +82,23 @@ export default function Checklist() {
           <p className="text-sds-muted text-sm">{checklist.length} SDS stage-gate deliverables audited</p>
         </div>
 
-        {/* Search */}
-        <div className="relative">
-          <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-sds-muted pointer-events-none" />
-          <input
-            type="text" placeholder="Search deliverables..."
-            value={search} onChange={e => setSearch(e.target.value)}
-            className="bg-sds-card border border-sds-border text-sds-white text-xs pl-8 pr-4 py-2.5 rounded-xl
-                       focus:outline-none focus:border-sds-orange/50 placeholder:text-sds-muted/40 w-60"
-          />
+        <div className="flex items-center gap-3">
+          {/* Search */}
+          <div className="relative">
+            <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-sds-muted pointer-events-none" />
+            <input
+              type="text" placeholder="Search deliverables..."
+              value={search} onChange={e => setSearch(e.target.value)}
+              className="bg-sds-card border border-sds-border text-sds-white text-xs pl-8 pr-4 py-2.5 rounded-xl
+                         focus:outline-none focus:border-sds-orange/50 placeholder:text-sds-muted/40 w-60"
+            />
+          </div>
+          {/* Download */}
+          <a href="/Red_Duke_Report.xlsx" download
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all hover:scale-105"
+            style={{ background: 'rgba(255,102,48,0.15)', border: '1px solid rgba(255,102,48,0.4)', color: '#FF6630' }}>
+            <Download size={13} /> Excel
+          </a>
         </div>
       </div>
 
@@ -167,7 +176,7 @@ export default function Checklist() {
         <table className="w-full text-sm min-w-[900px]">
           <thead>
             <tr style={{ borderBottom: '1px solid rgba(46,26,106,0.5)', background: 'rgba(13,5,32,0.6)' }}>
-              {['Deliverable', 'Stage Gate', 'Owner', 'Status', 'Confidence', 'Evidence Files', 'Notes'].map(h => (
+              {['Deliverable', 'Stage Gate', 'Owner', 'Status', 'Confidence', 'Priority', 'Effort', 'Evidence Files', 'Notes'].map(h => (
                 <th key={h} className="text-left px-5 py-3.5 text-[10px] font-bold text-sds-muted uppercase tracking-widest whitespace-nowrap">
                   {h}
                 </th>
@@ -178,51 +187,120 @@ export default function Checklist() {
             {filtered.map((item, i) => {
               const cfg = STATUS_CFG[item.status] || STATUS_CFG.MISSING
               const Icon = cfg.icon
+              const isExpanded = expandedRow === i
+              const hasEvidence = item.evidence_trail?.length > 0
               return (
-                <tr
-                  key={i}
-                  className={`${cfg.bar} transition-colors animate-fade-in-up opacity-0-init`}
-                  style={{
-                    borderBottom: '1px solid rgba(46,26,106,0.2)',
-                    animationDelay: `${i * 30}ms`,
-                    animationFillMode: 'forwards',
-                  }}
-                  onMouseEnter={e => e.currentTarget.style.background = 'rgba(46,26,106,0.15)'}
-                  onMouseLeave={e => e.currentTarget.style.background = ''}
-                >
-                  <td className="px-5 py-4 text-sds-white font-semibold text-xs max-w-[220px] leading-snug">
-                    {item.deliverable}
-                  </td>
-                  <td className="px-5 py-4 whitespace-nowrap">
-                    <span className="text-[10px] font-mono text-sds-muted px-2 py-0.5 rounded"
-                      style={{ background: 'rgba(46,26,106,0.4)', border: '1px solid rgba(46,26,106,0.6)' }}>
-                      {item.stage_gate}
-                    </span>
-                  </td>
-                  <td className="px-5 py-4 text-sds-muted text-xs whitespace-nowrap">
-                    {item.responsibility || '—'}
-                  </td>
-                  <td className="px-5 py-4 whitespace-nowrap">
-                    <span className={`inline-flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full font-bold ${cfg.badge}`}>
-                      <Icon size={9} />
-                      {item.status}
-                    </span>
-                  </td>
-                  <td className={`px-5 py-4 text-xs font-bold ${CONFIDENCE_CFG[item.confidence] || 'text-sds-muted/40'}`}>
-                    {item.confidence || '—'}
-                  </td>
-                  <td className="px-5 py-4 text-xs max-w-[180px]">
-                    {item.evidence_files?.length > 0
-                      ? item.evidence_files.map((f, fi) => (
-                        <div key={fi} className="text-sds-purple-glow truncate leading-snug">{f}</div>
-                      ))
-                      : <span className="text-sds-muted/30">—</span>
-                    }
-                  </td>
-                  <td className="px-5 py-4 text-xs text-sds-muted/70 leading-relaxed min-w-[280px]">
-                    {item.notes || '—'}
-                  </td>
-                </tr>
+                <React.Fragment key={i}>
+                  <tr
+                    className={`${cfg.bar} transition-colors animate-fade-in-up opacity-0-init ${hasEvidence ? 'cursor-pointer' : ''}`}
+                    style={{
+                      borderBottom: isExpanded ? 'none' : '1px solid rgba(46,26,106,0.2)',
+                      animationDelay: `${i * 30}ms`,
+                      animationFillMode: 'forwards',
+                    }}
+                    onClick={() => hasEvidence && setExpandedRow(isExpanded ? null : i)}
+                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(46,26,106,0.15)'}
+                    onMouseLeave={e => e.currentTarget.style.background = ''}
+                  >
+                    <td className="px-5 py-4 text-sds-white font-semibold text-xs max-w-[220px] leading-snug">
+                      <div className="flex items-center gap-2">
+                        {hasEvidence && (
+                          <ChevronRight size={11}
+                            className={`text-sds-muted/40 shrink-0 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
+                        )}
+                        <span>{item.deliverable}</span>
+                      </div>
+                    </td>
+                    <td className="px-5 py-4 whitespace-nowrap">
+                      <span className="text-[10px] font-mono text-sds-muted px-2 py-0.5 rounded"
+                        style={{ background: 'rgba(46,26,106,0.4)', border: '1px solid rgba(46,26,106,0.6)' }}>
+                        {item.stage_gate}
+                      </span>
+                    </td>
+                    <td className="px-5 py-4 text-sds-muted text-xs whitespace-nowrap">
+                      {item.responsibility || '—'}
+                    </td>
+                    <td className="px-5 py-4 whitespace-nowrap">
+                      <span className={`inline-flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full font-bold ${cfg.badge}`}>
+                        <Icon size={9} />
+                        {item.status}
+                      </span>
+                    </td>
+                    <td className={`px-5 py-4 text-xs font-bold ${CONFIDENCE_CFG[item.confidence] || 'text-sds-muted/40'}`}>
+                      {item.confidence || '—'}
+                    </td>
+                    <td className="px-5 py-4 whitespace-nowrap">
+                      {item.priority && (
+                        <span className={`text-[10px] font-black px-1.5 py-0.5 rounded ${
+                          item.priority === 'P1' ? 'bg-sds-orange/20 text-sds-orange' :
+                          item.priority === 'P2' ? 'bg-sds-orange-light/15 text-sds-orange-light' :
+                          'bg-sds-purple/20 text-sds-purple-glow'
+                        }`}>{item.priority}</span>
+                      )}
+                    </td>
+                    <td className="px-5 py-4 text-xs text-sds-muted whitespace-nowrap">
+                      {item.estimated_effort || '—'}
+                    </td>
+                    <td className="px-5 py-4 text-xs max-w-[180px]">
+                      {item.evidence_files?.length > 0
+                        ? item.evidence_files.map((f, fi) => (
+                          <div key={fi} className="text-sds-purple-glow truncate leading-snug">{f}</div>
+                        ))
+                        : <span className="text-sds-muted/30">—</span>
+                      }
+                    </td>
+                    <td className="px-5 py-4 text-xs text-sds-muted/70 leading-relaxed min-w-[280px]">
+                      {item.notes || '—'}
+                    </td>
+                  </tr>
+
+                  {/* Evidence trail expansion */}
+                  {isExpanded && hasEvidence && (
+                    <tr style={{ borderBottom: '1px solid rgba(46,26,106,0.2)' }}>
+                      <td colSpan={9} className="px-0 py-0">
+                        <div className="animate-fade-in mx-5 mb-4 mt-1 rounded-xl overflow-hidden"
+                          style={{ background: 'rgba(13,5,32,0.5)', border: '1px solid rgba(46,26,106,0.3)' }}>
+                          <div className="px-5 py-3 flex items-center gap-2"
+                            style={{ borderBottom: '1px solid rgba(46,26,106,0.25)', background: 'rgba(91,53,196,0.06)' }}>
+                            <Quote size={11} className="text-sds-purple-glow" />
+                            <span className="text-[10px] font-bold text-sds-purple-glow uppercase tracking-widest">
+                              Evidence Trail — {item.evidence_trail.length} source(s)
+                            </span>
+                          </div>
+                          <div className="divide-y divide-sds-border/15">
+                            {item.evidence_trail.map((ev, ei) => (
+                              <div key={ei} className="px-5 py-4">
+                                <div className="flex items-center gap-2 mb-2">
+                                  <FileText size={11} className="text-sds-purple-glow shrink-0" />
+                                  <span className="text-[11px] text-sds-white font-semibold">{ev.source_file}</span>
+                                  {ev.section_or_location && (
+                                    <span className="text-[10px] font-mono text-sds-muted px-2 py-0.5 rounded"
+                                      style={{ background: 'rgba(46,26,106,0.4)', border: '1px solid rgba(46,26,106,0.6)' }}>
+                                      {ev.section_or_location}
+                                    </span>
+                                  )}
+                                </div>
+                                {ev.excerpt && (
+                                  <div className="rounded-lg p-3 mb-2"
+                                    style={{ background: 'rgba(91,53,196,0.06)', borderLeft: '2px solid rgba(155,117,255,0.4)' }}>
+                                    <p className="text-[11px] text-sds-muted-light leading-relaxed italic">
+                                      "{ev.excerpt}"
+                                    </p>
+                                  </div>
+                                )}
+                                {ev.assessment && (
+                                  <p className="text-[11px] text-sds-muted leading-relaxed">
+                                    {ev.assessment}
+                                  </p>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
               )
             })}
           </tbody>

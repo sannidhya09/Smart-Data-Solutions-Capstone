@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import {
   LayoutDashboard, FolderOpen, ClipboardCheck,
-  Zap, GitMerge, ChevronRight,
+  Zap, ShieldCheck, GitCompareArrows, Brain, GitMerge, ChevronRight,
 } from 'lucide-react'
 import { useAnalysis } from '../App'
 import SdsLogo from './SdsLogo'
@@ -11,6 +11,9 @@ const nav = [
   { path: '/documents', label: 'Documents',           icon: FolderOpen,      desc: 'Parsed file analysis' },
   { path: '/checklist', label: 'Checklist',           icon: ClipboardCheck,  desc: 'Evidence mapping' },
   { path: '/gaps',      label: 'Gap Analysis',        icon: Zap,             desc: 'Missing deliverables' },
+  { path: '/decisions', label: 'Go / No-Go',          icon: ShieldCheck,     desc: 'Gate decisions' },
+  { path: '/cross-intel', label: 'Cross-Doc Intel',  icon: GitCompareArrows, desc: 'Cross-document conflicts' },
+  { path: '/mind',     label: 'Project Mind',         icon: Brain,           desc: 'Unified intelligence' },
   { path: '/workflow',  label: 'Workflow Narrative',  icon: GitMerge,        desc: 'Process intelligence' },
 ]
 
@@ -42,9 +45,11 @@ export default function Sidebar() {
   const data = useAnalysis()
   const metrics   = data?.metrics    || {}
   const overview  = data?.client_overview || {}
-  const coverage  = metrics.coverage_score ?? 0
-  const highGaps  = metrics.high_risk_gaps ?? 0
-  const totalDocs = metrics.total_documents ?? 0
+  const coverage    = metrics.coverage_score ?? 0
+  const highGaps    = metrics.high_risk_gaps ?? 0
+  const totalDocs   = metrics.total_documents ?? 0
+  const crossIntel  = data?.cross_document_intel || {}
+  const crossIssues = crossIntel.total_issues ?? 0
 
   return (
     <aside className="w-64 sidebar-bg flex flex-col shrink-0 relative z-20">
@@ -132,6 +137,16 @@ export default function Sidebar() {
                 <span className="text-[11px] text-sds-muted-light">High-risk gaps</span>
               </div>
               <span className="text-xs font-bold text-sds-orange">{highGaps}</span>
+            </div>
+          )}
+
+          {crossIssues > 0 && (
+            <div className="flex items-center justify-between bg-sds-purple-glow/8 border border-sds-purple-glow/20 rounded-lg px-3 py-2 mt-2">
+              <div className="flex items-center gap-2">
+                <GitCompareArrows size={11} className="text-sds-purple-glow" />
+                <span className="text-[11px] text-sds-muted-light">Cross-doc issues</span>
+              </div>
+              <span className="text-xs font-bold text-sds-purple-glow">{crossIssues}</span>
             </div>
           )}
         </div>

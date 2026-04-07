@@ -7,6 +7,9 @@ import Dashboard from './pages/Dashboard'
 import Documents from './pages/Documents'
 import Checklist from './pages/Checklist'
 import GapAnalysis from './pages/GapAnalysis'
+import GateDecisions from './pages/GateDecisions'
+import CrossDocIntel from './pages/CrossDocIntel'
+import ProjectMind from './pages/ProjectMind'
 import WorkflowNarrative from './pages/WorkflowNarrative'
 
 export const AnalysisContext = createContext(null)
@@ -141,7 +144,10 @@ export default function App() {
               <Route path="/"          element={<Dashboard />} />
               <Route path="/documents" element={<Documents />} />
               <Route path="/checklist" element={<Checklist />} />
-              <Route path="/gaps"      element={<GapAnalysis />} />
+              <Route path="/gaps"        element={<GapAnalysis />} />
+              <Route path="/decisions"   element={<GateDecisions />} />
+              <Route path="/cross-intel" element={<CrossDocIntel />} />
+              <Route path="/mind"      element={<ProjectMind />} />
               <Route path="/workflow"  element={<WorkflowNarrative />} />
             </Routes>
           </PageWrapper>

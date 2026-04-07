@@ -936,20 +936,156 @@ def main():
         with open(frontend_json_path, "w", encoding="utf-8") as f:
             json.dump(analysis_output, f, indent=2)
 
+        # Generate Excel report
+        from analyzer import export_excel
+        excel_path = os.path.join(OUTPUT_DIR, "Red_Duke_Report.xlsx")
+        export_excel(analysis_output, excel_path)
+
+        # Copy Excel to frontend/public so it can be downloaded from the UI
+        import shutil
+        frontend_excel = os.path.join(frontend_public, "Red_Duke_Report.xlsx")
+        shutil.copy2(excel_path, frontend_excel)
+
         m = analysis_output.get("metrics", {})
         print(f"\n  Coverage score:    {m.get('coverage_score', '?')}%")
         print(f"  Total gaps:        {m.get('total_gaps', '?')}")
         print(f"  High-risk gaps:    {m.get('high_risk_gaps', '?')}")
         print(f"  Output (backend):  {analysis_json_path}")
         print(f"  Output (frontend): {frontend_json_path}")
+        print(f"  Excel report:      {excel_path}")
 
     except Exception as exc:
         print(f"\n  AI Analysis failed: {exc}")
-        print("  Continuing without AI analysis — dashboard will not load.")
+        import traceback
+        traceback.print_exc()
+        print("  Building fallback analysis from audit data...")
 
-    # ── Step 6: Upload Outputs to SharePoint (optional) ──
+        # Build a minimal analysis_output from audit checklist so Steps 6/7 can still run
+        analysis_output = {
+            "client_overview": {
+                "client_name": "Client",
+                "summary": "AI analysis failed — showing audit-only data.",
+                "scope": "",
+                "integrations": [],
+                "key_decisions": [],
+                "open_risks": [],
+                "current_phase": "Unknown",
+            },
+            "documents": [
+                {
+                    "filename": r.filename,
+                    "file_type": r.file_type,
+                    "word_count": r.word_count,
+                    "quality_score": "ADEQUATE",
+                }
+                for r in results if r.success
+            ],
+            "workflow_narrative": {},
+            "checklist": [],
+            "gap_analysis": [],
+            "metrics": {
+                "coverage_score": 0,
+                "total_gaps": 0,
+                "high_risk_gaps": 0,
+            },
+            "pipeline_metadata": {
+                "generated_at": datetime.now().isoformat(),
+                "source_directory": source_dir,
+                "total_chunks": len(all_chunks),
+                "total_tokens": total_tokens,
+                "parse_failures": sum(1 for r in results if not r.success),
+                "ai_analysis_failed": True,
+            },
+        }
+
+    # ── Step 6: Cross-Document Intelligence ──
+    print_header("STEP 6: CROSS-DOCUMENT INTELLIGENCE", "─")
+    try:
+        from cross_document_intel import run_cross_document_analysis
+        cross_intel = run_cross_document_analysis(results)
+
+        # Attach to analysis output so the frontend can consume it
+        if analysis_output is not None:
+            analysis_output["cross_document_intel"] = cross_intel
+
+            # Re-write the analysis JSON with cross-intel included
+            analysis_json_path = os.path.join(OUTPUT_DIR, "analysis_output.json")
+            with open(analysis_json_path, "w", encoding="utf-8") as f:
+                json.dump(analysis_output, f, indent=2)
+
+            frontend_public = os.path.join(
+                os.path.dirname(os.path.abspath(__file__)), "..", "frontend", "public"
+            )
+            frontend_json_path = os.path.join(frontend_public, "analysis_output.json")
+            with open(frontend_json_path, "w", encoding="utf-8") as f:
+                json.dump(analysis_output, f, indent=2)
+
+            # Re-generate Excel with the cross-intel sheet
+            from analyzer import export_excel
+            excel_path = os.path.join(OUTPUT_DIR, "Red_Duke_Report.xlsx")
+            export_excel(analysis_output, excel_path)
+
+            import shutil
+            frontend_excel = os.path.join(frontend_public, "Red_Duke_Report.xlsx")
+            shutil.copy2(excel_path, frontend_excel)
+
+            print(f"\n  Cross-intel merged into analysis_output.json")
+
+    except Exception as exc:
+        print(f"\n  Cross-Document Intelligence failed: {exc}")
+        import traceback
+        traceback.print_exc()
+
+    # ── Step 7: Project Intelligence ("The Brain") ──
+    print_header("STEP 7: PROJECT INTELLIGENCE ENGINE", "─")
+    try:
+        from project_intelligence import run_project_intelligence
+        intel = run_project_intelligence(
+            analysis_output or {},
+            analysis_output.get("cross_document_intel") if analysis_output else {},
+            results,
+        )
+
+        if analysis_output is not None:
+            # Replace checklist with scored version
+            analysis_output["checklist"] = intel["scored_checklist"]
+            analysis_output["stage_readiness"] = intel["stage_readiness"]
+            analysis_output["gate_decisions"] = intel["gate_decisions"]
+            analysis_output["proactive_actions"] = intel["proactive_actions"]
+            analysis_output["project_mind"] = intel["project_mind"]
+            analysis_output["overall_readiness_score"] = intel["overall_readiness_score"]
+
+            # Final write of analysis JSON
+            analysis_json_path = os.path.join(OUTPUT_DIR, "analysis_output.json")
+            with open(analysis_json_path, "w", encoding="utf-8") as f:
+                json.dump(analysis_output, f, indent=2)
+
+            frontend_public = os.path.join(
+                os.path.dirname(os.path.abspath(__file__)), "..", "frontend", "public"
+            )
+            frontend_json_path = os.path.join(frontend_public, "analysis_output.json")
+            with open(frontend_json_path, "w", encoding="utf-8") as f:
+                json.dump(analysis_output, f, indent=2)
+
+            # Final Excel regeneration
+            from analyzer import export_excel
+            excel_path = os.path.join(OUTPUT_DIR, "Red_Duke_Report.xlsx")
+            export_excel(analysis_output, excel_path)
+
+            import shutil
+            frontend_excel = os.path.join(frontend_public, "Red_Duke_Report.xlsx")
+            shutil.copy2(excel_path, frontend_excel)
+
+            print(f"\n  Intelligence merged into analysis_output.json")
+
+    except Exception as exc:
+        print(f"\n  Project Intelligence failed: {exc}")
+        import traceback
+        traceback.print_exc()
+
+    # ── Step 8: Upload Outputs to SharePoint (optional) ──
     if _SP_AVAILABLE and _sp.is_sharepoint_configured():
-        print_header("STEP 6: SHAREPOINT UPLOAD", "─")
+        print_header("STEP 8: SHAREPOINT UPLOAD", "─")
         try:
             uploaded = _sp.upload_to_sharepoint(OUTPUT_DIR)
             print(f"\n  Uploaded {len(uploaded)} file(s) to SharePoint ✅")

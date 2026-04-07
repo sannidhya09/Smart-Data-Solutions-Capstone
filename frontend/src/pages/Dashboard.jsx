@@ -1,4 +1,4 @@
-import { TrendingUp, FileText, ShieldCheck, Zap, AlertTriangle, CheckCircle2, Clock } from 'lucide-react'
+import { TrendingUp, FileText, ShieldCheck, Zap, AlertTriangle, CheckCircle2, Clock, Download, Target, Rocket, Brain, Gauge, GitCompareArrows, CalendarClock } from 'lucide-react'
 import { useAnalysis } from '../App'
 import useCountUp from '../hooks/useCountUp'
 
@@ -40,28 +40,48 @@ function MetricCard({ label, value, sub, icon: Icon, delay = 0, accent = false }
   )
 }
 
-/* ── Stage gate bar ───────────────────────────────────────── */
-function GateBar({ label, value, index }) {
+/* ── Stage gate bar (multi-dimensional) ──────────────────── */
+const DIM_COLORS = { completeness: '#9B75FF', quality: '#7B55E0', consistency: '#FF8C58', freshness: '#FF6630' }
+const DIM_ICONS  = { completeness: Gauge, quality: ShieldCheck, consistency: GitCompareArrows, freshness: CalendarClock }
+
+function GateBar({ label, value, index, stageData }) {
+  const readiness = stageData?.readiness ?? value
   const barColor =
-    value >= 75 ? 'linear-gradient(90deg, #7B55E0, #9B75FF)' :
-    value >= 40 ? 'linear-gradient(90deg, #FF8C58, #FF6630)' :
-                  'linear-gradient(90deg, #FF6630, #FF3000)'
+    readiness >= 70 ? 'linear-gradient(90deg, #7B55E0, #9B75FF)' :
+    readiness >= 40 ? 'linear-gradient(90deg, #FF8C58, #FF6630)' :
+                      'linear-gradient(90deg, #FF6630, #FF3000)'
 
   return (
-    <div className="flex items-center gap-4 py-2.5 border-b border-sds-border/20 last:border-0
+    <div className="py-2.5 border-b border-sds-border/20 last:border-0
                     animate-fade-in-up opacity-0-init"
       style={{ animationDelay: `${200 + index * 80}ms`, animationFillMode: 'forwards' }}>
-      <span className="text-xs text-sds-muted font-mono w-44 shrink-0">{label}</span>
-      <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(46,26,106,0.5)' }}>
-        <div
-          className="progress-bar-fill"
-          style={{ '--bar-w': `${Math.max(value, 2)}%`, background: barColor }}
-        />
+      <div className="flex items-center gap-4 mb-1">
+        <span className="text-xs text-sds-muted font-mono w-44 shrink-0">{label}</span>
+        <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(46,26,106,0.5)' }}>
+          <div className="progress-bar-fill"
+            style={{ '--bar-w': `${Math.max(readiness, 2)}%`, background: barColor }} />
+        </div>
+        <span className="text-xs font-bold w-9 text-right shrink-0"
+          style={{ color: readiness >= 70 ? '#9B75FF' : readiness >= 40 ? '#FF8C58' : '#FF6630' }}>
+          {readiness}%
+        </span>
       </div>
-      <span className="text-xs font-bold w-9 text-right shrink-0"
-        style={{ color: value >= 75 ? '#9B75FF' : value >= 40 ? '#FF8C58' : '#FF6630' }}>
-        {value}%
-      </span>
+      {stageData && (
+        <div className="flex items-center gap-3 ml-[11.5rem] mt-0.5">
+          {['completeness', 'quality', 'consistency', 'freshness'].map(dim => {
+            const v = stageData[dim] ?? 0
+            const Icon = DIM_ICONS[dim]
+            return (
+              <div key={dim} className="flex items-center gap-1" title={dim}>
+                <Icon size={8} style={{ color: DIM_COLORS[dim], opacity: 0.6 }} />
+                <span className="text-[9px] font-mono" style={{ color: DIM_COLORS[dim], opacity: 0.7 }}>
+                  {v}
+                </span>
+              </div>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }
@@ -95,13 +115,14 @@ export default function Dashboard() {
   const data = useAnalysis()
   if (!data) return null
 
-  const { client_overview: co = {}, metrics = {}, gap_analysis = [], checklist = [], pipeline_metadata: pm } = data
+  const { client_overview: co = {}, metrics = {}, gap_analysis = [], checklist = [], readiness_assessment: ra = {}, action_items = [], stage_readiness: sr = {}, project_mind: mind = {} } = data
   const sg          = metrics.stage_gate_completion || {}
+  const overallReadiness = data.overall_readiness_score ?? 0
   const presentCount = checklist.filter(c => c.status === 'PRESENT').length
   const partialCount = checklist.filter(c => c.status === 'PARTIAL').length
   const highGaps    = gap_analysis.filter(g => g.impact === 'HIGH')
   const medGaps     = gap_analysis.filter(g => g.impact === 'MEDIUM')
-  const genTime     = new Date().toLocaleString()
+  const readinessColor = { RED: 'text-sds-orange', YELLOW: 'text-sds-orange-light', GREEN: 'text-sds-purple-glow' }[ra.overall_readiness] || 'text-sds-muted'
 
   return (
     <div className="p-8 max-w-screen-xl">
@@ -131,12 +152,81 @@ export default function Dashboard() {
             style={{ background: 'linear-gradient(135deg,#2E1A6A,#1A0F3C)' }}>
             <span className="text-[8px] font-black text-gradient-orange">RD</span>
           </div>
-          <p className="text-sds-muted-light text-xs">
+          <p className="text-sds-muted-light text-xs flex-1">
             <span className="text-sds-orange font-semibold">Red Duke AI detected: </span>
             Based on evidence found across {metrics.total_documents ?? 0} documents, this project is currently at stage{' '}
             <span className="text-white font-semibold">{co.current_phase}</span>
             {' '}— documentation coverage must reach ~70% before advancing to TG1 (Implementation).
           </p>
+          <a href="/Red_Duke_Report.xlsx" download
+            className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold shrink-0 transition-all hover:scale-105"
+            style={{ background: 'rgba(255,102,48,0.15)', border: '1px solid rgba(255,102,48,0.4)', color: '#FF6630' }}>
+            <Download size={13} /> Download Report
+          </a>
+        </div>
+      )}
+
+      {/* Readiness assessment */}
+      {ra.executive_summary && (
+        <div className="glass rounded-2xl p-5 mb-8 animate-fade-in" style={{ animationDelay: '100ms' }}>
+          <div className="flex items-center gap-3 mb-3">
+            <Target size={14} className="text-sds-orange" />
+            <h2 className="text-xs font-bold text-sds-muted-light uppercase tracking-widest">Readiness Assessment</h2>
+            <span className={`text-xs font-black px-2.5 py-0.5 rounded-full ${readinessColor}`}
+              style={{ background: ra.overall_readiness === 'RED' ? 'rgba(255,102,48,0.15)' : ra.overall_readiness === 'GREEN' ? 'rgba(91,53,196,0.15)' : 'rgba(255,140,88,0.15)' }}>
+              {ra.overall_readiness}
+            </span>
+          </div>
+          <p className="text-sds-muted-light text-sm leading-relaxed mb-4">{ra.executive_summary}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {(ra.blockers_to_advance || []).length > 0 && (
+              <div>
+                <p className="text-[10px] text-sds-orange font-bold uppercase tracking-widest mb-2">Blockers to Advance</p>
+                <ul className="space-y-1.5">
+                  {ra.blockers_to_advance.map((b, i) => (
+                    <li key={i} className="flex gap-2 text-xs text-sds-muted-light">
+                      <AlertTriangle size={10} className="text-sds-orange shrink-0 mt-0.5" />{b}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {(ra.quick_wins || []).length > 0 && (
+              <div>
+                <p className="text-[10px] text-sds-purple-glow font-bold uppercase tracking-widest mb-2">Quick Wins</p>
+                <ul className="space-y-1.5">
+                  {ra.quick_wins.map((q, i) => (
+                    <li key={i} className="flex gap-2 text-xs text-sds-muted-light">
+                      <Rocket size={10} className="text-sds-purple-glow shrink-0 mt-0.5" />{q}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Project Mind insight */}
+      {mind.critical_insight && (
+        <div className="glass rounded-2xl p-5 mb-8 animate-fade-in" style={{ animationDelay: '120ms' }}>
+          <div className="flex items-center gap-3 mb-3">
+            <Brain size={14} className="text-sds-purple-glow" />
+            <h2 className="text-xs font-bold text-sds-purple-glow uppercase tracking-widest">Project Mind</h2>
+            {overallReadiness > 0 && (
+              <span className="text-xs font-black px-2.5 py-0.5 rounded-full ml-auto"
+                style={{
+                  color: overallReadiness >= 70 ? '#9B75FF' : overallReadiness >= 40 ? '#FF8C58' : '#FF6630',
+                  background: overallReadiness >= 70 ? 'rgba(155,117,255,0.12)' : overallReadiness >= 40 ? 'rgba(255,140,88,0.12)' : 'rgba(255,102,48,0.12)',
+                }}>
+                Readiness: {overallReadiness}%
+              </span>
+            )}
+          </div>
+          <p className="text-sds-white text-sm font-semibold leading-relaxed mb-2">{mind.critical_insight}</p>
+          {mind.next_actions_narrative && (
+            <p className="text-sds-muted text-xs leading-relaxed">{mind.next_actions_narrative}</p>
+          )}
         </div>
       )}
 
@@ -169,7 +259,8 @@ export default function Dashboard() {
           </div>
           <div>
             {GATE_ORDER.map((key, i) => (
-              <GateBar key={key} label={GATE_LABELS[key]} value={sg[key] ?? 0} index={i} />
+              <GateBar key={key} label={GATE_LABELS[key]} value={sg[key] ?? 0} index={i}
+                stageData={sr[key]} />
             ))}
           </div>
         </div>
@@ -267,6 +358,35 @@ export default function Dashboard() {
           </ul>
         </div>
       </div>
+
+      {/* ── Top Action Items ── */}
+      {action_items.length > 0 && (
+        <div className="glass glass-hover rounded-2xl p-6 mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Rocket size={14} className="text-sds-orange" />
+              <h2 className="text-xs font-bold text-sds-muted-light uppercase tracking-widest">Priority Action Items</h2>
+            </div>
+            <span className="text-[10px] text-sds-muted font-mono">{action_items.length} items</span>
+          </div>
+          <div className="space-y-2">
+            {action_items.slice(0, 8).map((item, i) => (
+              <div key={i} className="flex items-start gap-3 py-2.5 border-b border-sds-border/20 last:border-0 animate-fade-in-up opacity-0-init"
+                style={{ animationDelay: `${i * 50}ms`, animationFillMode: 'forwards' }}>
+                <span className={`text-[10px] font-black px-1.5 py-0.5 rounded shrink-0 mt-0.5 ${
+                  item.priority === 'P1' ? 'bg-sds-orange/20 text-sds-orange' :
+                  item.priority === 'P2' ? 'bg-sds-orange-light/15 text-sds-orange-light' :
+                  'bg-sds-purple/20 text-sds-purple-glow'
+                }`}>{item.priority}</span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs text-sds-white font-medium leading-snug">{item.action}</p>
+                  <p className="text-[10px] text-sds-muted mt-0.5">{item.owner} · {item.stage_gate} · {item.estimated_effort}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* ── Integrations ── */}
       {(co.integrations || []).length > 0 && (

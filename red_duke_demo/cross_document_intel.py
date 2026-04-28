@@ -318,10 +318,10 @@ def detect_local_conflicts(all_entities: dict[str, list[ExtractedEntity]]) -> li
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# PHASE 2: GEMINI DEEP CROSS-REFERENCE ANALYSIS
+# PHASE 2: OPENAI DEEP CROSS-REFERENCE ANALYSIS
 # ══════════════════════════════════════════════════════════════════════════════
 
-GEMINI_MODEL = "gemini-2.5-flash-lite"
+OPENAI_MODEL = "gpt-4o-mini"
 MAX_CHARS_PER_DOC = 8000
 
 
@@ -330,7 +330,7 @@ def _build_cross_intel_prompt(
     local_entities: dict[str, list[ExtractedEntity]],
     local_issues: list[CrossDocIssue],
 ) -> str:
-    """Build the Gemini prompt for deep cross-document analysis."""
+    """Build the OpenAI prompt for deep cross-document analysis."""
 
     # Summarize documents
     doc_summaries = []
@@ -457,26 +457,25 @@ def run_cross_document_analysis(parse_results: list) -> dict:
     local_issues = detect_local_conflicts(all_entities)
     print(f"    Found {len(local_issues)} local conflict(s)")
 
-    print("\n  Phase 2: Running Gemini deep cross-reference analysis...")
-    # Import Gemini client from analyzer module
-    from analyzer import get_client, _ensure_genai
-    _ensure_genai()
-    from google.genai import types
+    print("\n  Phase 2: Running OpenAI deep cross-reference analysis...")
+    # Import OpenAI client from analyzer module
+    from analyzer import get_client, _ensure_openai
+    _ensure_openai()
 
     client = get_client()
     prompt = _build_cross_intel_prompt(parse_results, all_entities, local_issues)
     print(f"    Prompt size: {len(prompt):,} characters")
 
-    response = client.models.generate_content(
-        model=GEMINI_MODEL,
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            temperature=0.1,
-            response_mime_type="application/json",
-        ),
+    response = client.chat.completions.create(
+        model=OPENAI_MODEL,
+        messages=[
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.1,
+        response_format={"type": "json_object"},
     )
 
-    raw = response.text.strip()
+    raw = response.choices[0].message.content.strip()
     if raw.startswith("```"):
         lines = raw.split("\n")
         raw = "\n".join(lines[1:-1] if lines[-1].strip() == "```" else lines[1:])

@@ -254,15 +254,15 @@ add_normal(
 )
 
 # Step 5
-doc.add_heading('Step 5 — AI Analysis (Gemini)', level=3)
+doc.add_heading('Step 5 — AI Analysis (OpenAI)', level=3)
 add_normal(
     'The analyzer module (analyzer.py) constructs a large prompt containing all parsed document '
     'text (capped at 10,000 characters per document) and the full SDS stage-gate standard as JSON. '
-    'This prompt is sent to Google Gemini (model: gemini-2.5-flash-lite) with temperature=0.1 '
+    'This prompt is sent to OpenAI (model: gpt-4o-mini) with temperature=0.1 '
     'and response_mime_type="application/json" to force structured output.'
 )
 add_normal(
-    'Gemini returns a single JSON object containing: client overview, document summaries, '
+    'OpenAI returns a single JSON object containing: client overview, document summaries, '
     'a workflow narrative, a 22-item checklist (mapped to the SDS standard), gap analysis, '
     'action items, readiness assessment, and metrics. The analyzer then post-processes this — '
     'coercing metric types, recalculating zeros, and computing Go/No-Go gate decisions using a '
@@ -275,7 +275,7 @@ add_normal(
     'cross_document_intel.py runs a two-phase analysis. Phase 1 uses regex to extract entities '
     '(field names, dates, metrics) from each document locally. Phase 1.5 compares these entities '
     'across documents to find conflicts (e.g., same field called "member_id" in one doc and '
-    '"memberID" in another). Phase 2 sends all documents plus the local findings to Gemini for '
+    '"memberID" in another). Phase 2 sends all documents plus the local findings to OpenAI for '
     'deeper cross-reference analysis. The results are merged and attached to the main JSON as '
     'analysis_output.cross_document_intel.'
 )
@@ -286,7 +286,7 @@ add_normal(
     'project_intelligence.py is the final synthesis step. It computes multi-dimensional scores '
     '(Completeness, Quality, Consistency, Freshness) for each checklist item, aggregates them '
     'into Stage Readiness Scores per gate, generates Go/No-Go gate decisions from these scores, '
-    'runs a proactive recommendation engine, and calls Gemini one final time to produce the '
+    'runs a proactive recommendation engine, and calls OpenAI one final time to produce the '
     '"Project Mind" — a narrative synthesis of the entire project.'
 )
 
@@ -363,9 +363,9 @@ add_blue(
 
 doc.add_heading('5. AI Deep Analysis', level=3)
 add_blue(
-    'The text from all documents is sent to Google\'s Gemini AI along with the SDS '
+    'The text from all documents is sent to OpenAI along with the SDS '
     'stage-gate standard (the list of 22 deliverables required across 5 project stages). '
-    'Gemini reads through everything and produces a detailed report: what each document '
+    'OpenAI reads through everything and produces a detailed report: what each document '
     'contains, which deliverables have evidence, which are missing, what the gaps are, '
     'and what actions to take. It also writes a plain-English narrative of the project\'s '
     'workflow.'
@@ -426,7 +426,7 @@ add_bullet('TG2 (Test) — 4 deliverables: UAT Plan, UAT Sign-off, TPM/Complianc
 add_bullet('TG3 (Deploy/Warranty) — 4 deliverables: M2P/Go-Live Sign-off, Warranty Checklist, Lessons Learned, Final Handoff')
 
 add_normal(
-    'This standard is injected as JSON directly into the Gemini prompt so the AI knows exactly '
+    'This standard is injected as JSON directly into the OpenAI prompt so the AI knows exactly '
     'what to look for and how to categorize its findings.'
 )
 
@@ -471,8 +471,8 @@ add_normal(
     'and 60 after the match) as evidence. Each deliverable is marked FOUND or MISSING.'
 )
 
-# The Gemini prompt
-doc.add_heading('The Gemini Analysis Prompt (Step 5)', level=3)
+# The OpenAI prompt
+doc.add_heading('The OpenAI Analysis Prompt (Step 5)', level=3)
 add_normal(
     'The core analysis prompt in analyzer.py is structured as follows. This is the actual '
     'prompt structure sent to the AI:'
@@ -513,12 +513,12 @@ add_bullet('metrics — coverage score, gap counts, per-gate completion percenta
 doc.add_heading('Guardrails and Quality Controls', level=3)
 add_normal('We enforce several guardrails on the AI output:')
 
-add_bullet('Temperature is set to 0.1 — this makes Gemini\'s output nearly deterministic and reduces hallucination.')
-add_bullet('response_mime_type is set to "application/json" — Gemini is forced to return valid JSON, not prose.')
-add_bullet('Markdown fence stripping — if Gemini wraps its response in ```json fences (a common habit), we strip them before parsing.')
-add_bullet('JSONDecoder.raw_decode() — if Gemini returns multiple JSON objects concatenated, we only parse the first valid one instead of crashing.')
-add_bullet('Type coercion — all metric values are cast to int after parsing, since Gemini sometimes returns numbers as strings.')
-add_bullet('Zero recalculation — if Gemini returns 0 for coverage_score or gap counts, we recalculate them ourselves from the checklist data.')
+add_bullet('Temperature is set to 0.1 — this makes OpenAI\'s output nearly deterministic and reduces hallucination.')
+add_bullet('response_format is set to json_object — OpenAI is forced to return valid JSON, not prose.')
+add_bullet('Markdown fence stripping — if OpenAI wraps its response in ```json fences (a common habit), we strip them before parsing.')
+add_bullet('JSONDecoder.raw_decode() — if OpenAI returns multiple JSON objects concatenated, we only parse the first valid one instead of crashing.')
+add_bullet('Type coercion — all metric values are cast to int after parsing, since OpenAI sometimes returns numbers as strings.')
+add_bullet('Zero recalculation — if OpenAI returns 0 for coverage_score or gap counts, we recalculate them ourselves from the checklist data.')
 add_bullet('Stage-gate completion recomputation — if all gate percentages come back as 0, we recompute them from the checklist by matching deliverable names to the SDS_STANDARD.')
 add_bullet('The checklist MUST include all 22 deliverables — the prompt explicitly states this count.')
 add_bullet('Evidence trail requirement — for every PRESENT or PARTIAL item, the AI must provide at least one evidence trail entry with a verbatim excerpt from the source document.')
@@ -526,7 +526,7 @@ add_bullet('Evidence trail requirement — for every PRESENT or PARTIAL item, th
 # Go/No-Go Engine
 doc.add_heading('Go/No-Go Decision Engine (Deterministic)', level=3)
 add_normal(
-    'Gate decisions are NOT made by AI. After Gemini returns the checklist and gap analysis, '
+    'Gate decisions are NOT made by AI. After OpenAI returns the checklist and gap analysis, '
     'a deterministic Python function (_compute_gate_decisions in analyzer.py) computes the '
     'decision for each gate. The logic is:'
 )
@@ -568,11 +568,11 @@ add_normal('Phase 1.5 — Local conflict detection:')
 add_bullet('Field mismatches — if the same canonical field appears with different raw names in different documents, that is flagged as HIGH severity.')
 add_bullet('Metric conflicts — if the same type of metric (e.g., SLA turnaround) has different numeric values across documents, that is flagged.')
 
-add_normal('Phase 2 — Gemini deep analysis:')
+add_normal('Phase 2 — OpenAI deep analysis:')
 add_normal(
-    'A second prompt is sent to Gemini containing all document text (capped at 8,000 chars '
+    'A second prompt is sent to OpenAI containing all document text (capped at 8,000 chars '
     'per doc), the extracted entities, and the local conflicts found so far. The prompt '
-    'instructs Gemini to find NEW issues (not repeat the local ones) across five categories:'
+    'instructs OpenAI to find NEW issues (not repeat the local ones) across five categories:'
 )
 add_bullet('Field/Schema Mismatches')
 add_bullet('Timeline Conflicts')

@@ -54,32 +54,32 @@ SDS_STANDARD = {
     ],
 }
 
-GEMINI_MODEL = "gemini-2.5-flash-lite"
+OPENAI_MODEL = "gpt-4o-mini"
 MAX_CHARS_PER_DOC = 10000  # Per-document text cap to control cost
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# GEMINI CLIENT  (uses the new google-genai SDK)
+# OPENAI CLIENT
 # ══════════════════════════════════════════════════════════════════════════════
 
-def _ensure_genai():
+def _ensure_openai():
     try:
-        from google import genai  # noqa: F401
+        import openai  # noqa: F401
     except ImportError:
-        print("  Installing google-genai ...")
+        print("  Installing openai ...")
         subprocess.check_call(
-            [sys.executable, "-m", "pip", "install", "--quiet", "google-genai"]
+            [sys.executable, "-m", "pip", "install", "--quiet", "openai"]
         )
 
 
 def get_client():
-    _ensure_genai()
-    from google import genai
+    _ensure_openai()
+    from openai import OpenAI
 
-    api_key = os.getenv("GEMINI_API_KEY", "")
+    api_key = os.getenv("OPENAI_API_KEY", "")
     if not api_key:
-        raise RuntimeError("GEMINI_API_KEY not found. Add it to your .env file.")
-    return genai.Client(api_key=api_key)
+        raise RuntimeError("OPENAI_API_KEY not found. Add it to your .env file.")
+    return OpenAI(api_key=api_key)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -237,27 +237,25 @@ CRITICAL INSTRUCTIONS:
 
 def analyze_documents(parse_results: list) -> dict:
     """
-    Run Gemini analysis over all parsed documents.
+    Run OpenAI analysis over all parsed documents.
     Returns the structured analysis dict ready for JSON serialisation.
     """
-    print(f"  Model: {GEMINI_MODEL}")
+    print(f"  Model: {OPENAI_MODEL}")
 
     client = get_client()
     prompt = build_prompt(parse_results)
     print(f"  Prompt size: {len(prompt):,} characters")
 
-    from google.genai import types
-
-    response = client.models.generate_content(
-        model=GEMINI_MODEL,
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            temperature=0.1,
-            response_mime_type="application/json",
-        ),
+    response = client.chat.completions.create(
+        model=OPENAI_MODEL,
+        messages=[
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.1,
+        response_format={"type": "json_object"},
     )
 
-    raw = response.text.strip()
+    raw = response.choices[0].message.content.strip()
 
     # Strip accidental markdown fences
     if raw.startswith("```"):

@@ -494,10 +494,10 @@ def generate_gate_decisions(scored_checklist: list, stage_readiness: dict, gap_a
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# DRAFT DOCUMENT GENERATOR (Gemini-powered)
+# DRAFT DOCUMENT GENERATOR (OpenAI-powered)
 # ══════════════════════════════════════════════════════════════════════════════
 
-GEMINI_MODEL = "gemini-2.5-flash-lite"
+OPENAI_MODEL = "gpt-4o-mini"
 
 
 def generate_draft_document(deliverable_name: str, stage_gate: str, analysis: dict, parse_results: list) -> dict:
@@ -505,9 +505,8 @@ def generate_draft_document(deliverable_name: str, stage_gate: str, analysis: di
     Generate a context-aware draft document for a missing deliverable.
     Uses information from ALL parsed documents to pre-fill the draft.
     """
-    from analyzer import get_client, _ensure_genai
-    _ensure_genai()
-    from google.genai import types
+    from analyzer import get_client, _ensure_openai
+    _ensure_openai()
 
     # Gather context from all documents
     context_snippets = []
@@ -564,16 +563,16 @@ Return ONLY a JSON object with this structure:
 CRITICAL: Use REAL data from the documents — names, systems, field names, dates, SLA numbers. Do NOT use generic placeholders like 'Company X'. Mark only genuinely unknown items with [ACTION REQUIRED]."""
 
     client = get_client()
-    response = client.models.generate_content(
-        model=GEMINI_MODEL,
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            temperature=0.2,
-            response_mime_type="application/json",
-        ),
+    response = client.chat.completions.create(
+        model=OPENAI_MODEL,
+        messages=[
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.2,
+        response_format={"type": "json_object"},
     )
 
-    raw = response.text.strip()
+    raw = response.choices[0].message.content.strip()
     if raw.startswith("```"):
         lines = raw.split("\n")
         raw = "\n".join(lines[1:-1] if lines[-1].strip() == "```" else lines[1:])
@@ -596,12 +595,11 @@ CRITICAL: Use REAL data from the documents — names, systems, field names, date
 
 def generate_project_mind(analysis: dict, cross_intel: dict, parse_results: list) -> dict:
     """
-    Generate a unified "Project Mind" synthesis from Gemini.
+    Generate a unified "Project Mind" synthesis from OpenAI.
     This is the system's coherent understanding of the entire project.
     """
-    from analyzer import get_client, _ensure_genai
-    _ensure_genai()
-    from google.genai import types
+    from analyzer import get_client, _ensure_openai
+    _ensure_openai()
 
     # Summarize all intelligence for the prompt
     co = analysis.get("client_overview", {})
@@ -655,16 +653,16 @@ Return ONLY a JSON object:
 }}"""
 
     client = get_client()
-    response = client.models.generate_content(
-        model=GEMINI_MODEL,
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            temperature=0.15,
-            response_mime_type="application/json",
-        ),
+    response = client.chat.completions.create(
+        model=OPENAI_MODEL,
+        messages=[
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.15,
+        response_format={"type": "json_object"},
     )
 
-    raw = response.text.strip()
+    raw = response.choices[0].message.content.strip()
     if raw.startswith("```"):
         lines = raw.split("\n")
         raw = "\n".join(lines[1:-1] if lines[-1].strip() == "```" else lines[1:])

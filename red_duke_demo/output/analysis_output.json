@@ -1,271 +1,122 @@
 {
   "client_overview": {
-    "client_name": "ABC Corporation",
-    "summary": "This implementation project is setting up a Virtual Mailroom Phase 1 for ABC Corporation, leveraging SDS's QuickClaim platform. The engagement focuses on automating mailroom and data capture operations, including intake, processing, digitization, and secure transmission of incoming mail and documents. It aims to improve efficiency, compliance, and data accuracy through workflow automation. The project is currently in the Design phase, with initial initiation activities completed.",
-    "scope": "SDS will automate mailroom and data capture services for ABC Corporation, including intake via SFTP, processing, digitization, and secure transmission of documents. This involves configuring the QuickClaim platform, setting up workflows, and ensuring data accuracy and operational efficiency.",
-    "integrations": [
-      "SDS QuickClaim platform",
-      "SFTP",
-      "Email",
-      "Fax",
-      "Web Upload",
-      "API (SDS API for SSO)",
-      "Client Scanner",
-      "EDI Import",
-      "External applications",
-      "Clearinghouse",
-      "Provider Portal",
-      "SDS Data Stores",
-      "SDS Data & Image API",
-      "SDS-hosted SFTP (ftp.smart-data-solutions.com)"
-    ],
-    "key_decisions": [
-      "Client Performed Scanning Integration model selected.",
-      "SDS-hosted SFTP with PUSH/PULL configuration chosen.",
-      "PGP encryption will not be used on exchanged files.",
-      "SFTP account hosted by SDS with specific URL, username, port, and SSH key.",
-      "Specific SFTP intake folder structure defined.",
-      "Specific SFTP file naming convention required.",
-      "OOS mail defined as any scanned document without a standard CMS1500 or ADA Dental form.",
-      "SDS will utilize onshore capabilities for service delivery.",
-      "Data Capture Operations will run 24-hour, Monday-Friday."
-    ],
+    "client_name": "DEF Insurance",
+    "summary": "This implementation project is focused on setting up a Virtual Mailroom for DEF Insurance, which involves automating document processing and claims management. Currently, the project is in the early stages, with a High-Level Critical Path Project Plan and a Business Requirements Document (BRD) drafted but not finalized.",
+    "scope": "Implementation of a Virtual Mailroom system to streamline document handling and claims processing.",
+    "integrations": [],
+    "key_decisions": [],
     "open_risks": [
-      "The BRD contains placeholders for specific client responsibilities regarding pre-scan document preparation and indexing (e.g., document separation, identification, sorting). Lack of clarity here could lead to processing errors or delays.",
-      "The Project Plan indicates 'Sync-up on Input and Output file specifications' and 'Client access, Reporting Requirement and SLA' as tasks that can overlap with design/implementation, suggesting these may not be fully defined yet, posing a risk to configuration and testing.",
-      "The 'Implementation_Documentation_Standardization_Capstone_Scope.docx' document is a student project and not a formal client deliverable, but it highlights a general SDS challenge of fragmented and variable client documentation quality, which could indirectly impact this project if not managed.",
-      "The WF Diagram notes 'This is for illustrative purposes only. See \u2018Proposed Solution\u2019 for details on what SDS will be implementing.' This implies the diagram may not fully represent the final implemented workflow, creating a risk of misaligned expectations if the 'Proposed Solution' is not clearly documented and agreed upon."
+      "Incomplete BRD may lead to misalignment on project requirements, impacting the overall implementation timeline."
     ],
-    "current_phase": "TG0 (Design)"
+    "current_phase": "TG-1 (Initiation)"
   },
   "documents": [
     {
-      "filename": "ABC Corporation - High-Level Critical Path Project Plan.docx",
+      "filename": "MY_Insurance_-_High-Level_Critical_Path_Project_Plan.docx",
       "file_type": "Word Document (.docx)",
-      "purpose": "To outline the project timeline, phases, key activities, and estimated durations for the Virtual Mailroom Phase 1 implementation.",
-      "summary": "This document details the project timeline from Initiation (April 30 - June 6) through Deploy/Warranty (August 18 - October 15). It breaks down activities within each phase, including Discovery Sessions, BRD sessions, System Configuration, Technical Configuration, Testing (Functional, Volume, UAT), and Operational Readiness. It highlights overlapping activities between phases and estimates durations for key tasks.",
+      "purpose": "To outline the critical path and timeline for the Virtual Mailroom Phase 1 implementation.",
+      "summary": "The document provides a high-level overview of the project timeline and key milestones for the Virtual Mailroom implementation. However, it lacks detailed task descriptions and specific deadlines.",
       "key_topics": [
-        "Project Phases and Timelines",
-        "Key Activities per Phase",
-        "Task Durations",
-        "Overlapping Activities"
+        "Project Timeline",
+        "Milestones",
+        "Critical Path"
       ],
       "artifacts_present": [
-        "Initiation Phase Dates and Activities",
-        "Design Phase Dates and Activities",
-        "Implementation Phase Dates and Activities",
-        "Testing Phase Dates and Activities",
-        "Deploy/Warranty Phase Dates and Activities",
-        "Estimated Task Durations"
+        "Section: Project Timeline"
       ],
       "artifacts_missing_or_incomplete": [
-        "Specific outcomes of 'Discovery Sessions' beyond 'Executive Project Plan'.",
-        "Detailed breakdown of 'System Configuration' tasks.",
-        "Specifics on 'Sync-up on Input and Output file specifications'.",
-        "Details on 'Client access, Reporting Requirement and SLA'.",
-        "Specifics on 'Incorporating Automation and Intelligence'.",
-        "Detailed 'Testing Strategy and Plan'."
+        "Detailed task descriptions and specific deadlines are not provided."
       ],
       "cross_references": [
-        "Mentions BRD sessions as an outcome of Discovery Sessions, aligning with the BRD document.",
-        "References 'Input and Output file specifications' which should be detailed in the BRD or Technical Design.",
-        "Mentions 'Client access, Reporting Requirement and SLA' which should be detailed in the BRD or a separate Reporting Requirements document.",
-        "References 'Testing Strategy and Plan' which should align with UAT Plan & Test Cases.",
-        "The timeline suggests Design starts after Initiation, aligning with TG0 following TG-1."
+        "Relates to the BRD for detailed requirements that will inform the project plan."
       ],
-      "quality_score": 75,
-      "quality_numeric": 75
+      "quality_score": "ADEQUATE",
+      "quality_numeric": 60
     },
     {
-      "filename": "ABC Corporation -WF Diagram.vsdx",
-      "file_type": "Visio Diagram (.vsdx)",
-      "purpose": "To visually represent the end-to-end workflow for document intake, processing, and data export within the SDS and client environments.",
-      "summary": "This document contains multiple workflow diagrams illustrating various aspects of the mailroom and data capture process. It shows flows from client scanning, SDS mailroom intake (email, fax, web upload), data capture, eligibility matching, validation, sorting, and data export to formats like 837. It also depicts routing engine processes and interactions with external applications and SDS data stores.",
-      "key_topics": [
-        "Document Intake Channels",
-        "Data Capture Process",
-        "Eligibility Matching",
-        "Data Validation",
-        "Document Sorting and Routing",
-        "Data Export"
-      ],
-      "artifacts_present": [
-        "Visual representation of Image Import, Data Capture, Eligibility Matching, Data Validation, Data Export.",
-        "Depiction of various intake methods (Client Scanner, SDS Mailroom - Email, Fax, Web Upload).",
-        "Flows for sorting and document type identification.",
-        "Integration points with SDS Data Stores and external applications."
-      ],
-      "artifacts_missing_or_incomplete": [
-        "The diagram explicitly states 'This is for illustrative purposes only. See \u2018Proposed Solution\u2019 for details on what SDS will be implementing.' This indicates the diagram is not the definitive technical specification.",
-        "Specific details on 'Reject Review' processes are high-level.",
-        "The exact nature of 'Special Attachments' handling is not detailed.",
-        "The 'Client Scanner' workflow is presented on Page 1, while SDS Mailroom workflows are on Pages 2 & 3, requiring synthesis.",
-        "The diagram does not detail specific configurations for ABC Corporation, only general SDS capabilities."
-      ],
-      "cross_references": [
-        "Visually represents the 'Workflow / Process Flow Diagram' deliverable required for TG0.",
-        "The processes depicted (e.g., Data Capture, Eligibility Matching, Data Validation) should align with requirements detailed in the BRD.",
-        "The intake channels mentioned (SFTP, Email, Fax, Web Upload) should be configured as per the BRD.",
-        "The output format '837' mentioned aligns with claims processing."
-      ],
-      "quality_score": 50,
-      "quality_numeric": 50
-    },
-    {
-      "filename": "ABC Corporation 25080 BRD v0.1.docx",
+      "filename": "MY_Insurance_25082_BRD_v0_1.docx",
       "file_type": "Word Document (.docx)",
-      "purpose": "To capture the detailed business requirements, scope, and service delivery model for the mailroom and data capture operations transition to SDS.",
-      "summary": "This BRD outlines the purpose, scope, and service delivery model for SDS's mailroom and data capture services for ABC Corporation. It details input channels, client-performed scanning integration requirements, image submission standards, and SFTP intake specifications. It also includes sections on out-of-scope mail and connectivity details, though some specific responsibilities and configurations are marked as placeholders.",
+      "purpose": "To document the business requirements for the Virtual Mailroom implementation.",
+      "summary": "The BRD is currently in draft form and lacks substantial content. It does not provide clear requirements or specifications necessary for the project.",
       "key_topics": [
-        "Project Scope and Objectives",
-        "Service Delivery Model",
-        "Input Channels",
-        "Client Performed Scanning Integration",
-        "SFTP Intake",
-        "Connectivity and Security"
+        "Business Requirements",
+        "Project Scope",
+        "Stakeholder Needs"
       ],
-      "artifacts_present": [
-        "Project Summary and Purpose",
-        "Service Delivery Model (Onshore, Business Hours, Holidays)",
-        "Critical Deliverables for a Strong Start (Sample Files, Process Docs, etc.)",
-        "Input Channels Overview",
-        "Client Performed Scanning Integration Model",
-        "Image Submission Standards (Resolution, Format, Form Processing, Quality)",
-        "SFTP Intake details (Connectivity, SDS-hosted SFTP URL, Username, Port, SSH Key)",
-        "Definition of Out of Scope (OOS) Mail"
-      ],
+      "artifacts_present": [],
       "artifacts_missing_or_incomplete": [
-        "Section 'Client Performed Scanning Integration' has a placeholder: '[Insert specifics and responsibilities, equipment setup, barcode usage, file packaging rules, etc.]'.",
-        "Specifics on 'Key Contacts' are not provided.",
-        "Details on 'PO Box/Fax/SFTP Intake Setup' are not fully defined.",
-        "The 'Export File Format' section is referenced for OOS mail handling but not detailed.",
-        "Specifics on 'Reporting Requirements & SLA' are not present.",
-        "The document is version v0.1, indicating it is an early draft."
+        "The document is largely empty and does not contain any defined business requirements."
       ],
       "cross_references": [
-        "References 'Critical Deliverables to Ensure a Strong Start' which should align with early project plan activities.",
-        "Details SFTP intake which aligns with the Project Plan's 'Technical Configuration' and the WF Diagram's depiction of SFTP.",
-        "Mentions 'Input Channels' and 'Client Performed Scanning Integration' which are core to the workflow described in the WF Diagram.",
-        "The BRD is a key input for the 'Business Requirements Document (BRD)' deliverable for TG-1.",
-        "The SFTP details (URL, username, port) are specific configuration items."
+        "Essential for informing the project plan and ensuring alignment with client needs."
       ],
-      "quality_score": 50,
-      "quality_numeric": 50
-    },
-    {
-      "filename": "Implementation_Documentation_Standardization_Capstone_Scope.docx",
-      "file_type": "Word Document (.docx)",
-      "purpose": "To define the scope and objectives for a student capstone project focused on AI-assisted generation of client implementation documentation.",
-      "summary": "This document outlines a student capstone project to build an AI-assisted pipeline for generating client documentation from existing artifacts (BRDs, plans, diagrams). The goal is to create client summaries, workflow narratives, and gap reports to improve understanding for new team members. It specifies in-scope (SharePoint content ingestion, LLM summarization) and out-of-scope items (production code access).",
-      "key_topics": [
-        "AI-assisted Documentation Generation",
-        "Client Implementation Artifacts",
-        "Workflow Narrative Creation",
-        "Gap Identification",
-        "Student Capstone Project Scope"
-      ],
-      "artifacts_present": [
-        "Project Title, Duration, Type",
-        "Project Overview and Problem Statement",
-        "Project Objectives (Primary)",
-        "In Scope and Out of Scope items",
-        "Access Requirements (SharePoint, Read-only data)",
-        "Key Deliverables (Client Overview Packet, Workflow Narrative, Evidence Presence Report, etc.)",
-        "Success Criteria"
-      ],
-      "artifacts_missing_or_incomplete": [
-        "SDS SME Support section is empty.",
-        "Table 1 is empty.",
-        "Specific client folders for piloting are not named.",
-        "Details on the 'Proposed Solution' for the actual client implementation are not present (this document is about a separate student project)."
-      ],
-      "cross_references": [
-        "This document is not directly related to the ABC Corporation implementation but describes a general SDS initiative to improve documentation.",
-        "It mentions deliverables like 'Workflow Narrative' and 'Evidence Presence Report' which are conceptually similar to what is needed for this project's documentation.",
-        "It highlights the challenge of fragmented client documentation, which is a known issue that this project aims to address."
-      ],
-      "quality_score": 75,
-      "quality_numeric": 75
+      "quality_score": "WEAK",
+      "quality_numeric": 20
     }
   ],
-  "workflow_narrative": "This implementation project focuses on establishing a Virtual Mailroom Phase 1 for ABC Corporation, leveraging Smart Data Solutions' (SDS) QuickClaim platform. The primary goal is to automate mailroom and data capture operations, enhancing efficiency, compliance, and data accuracy. SDS will be responsible for the intake, processing, digitization, and secure transmission of incoming mail and related documents, utilizing onshore capabilities for service delivery.\n\nThe document intake process is designed to be flexible, supporting various channels. For this implementation, a key decision is the 'Client Performed Scanning Integration' model, where ABC Corporation handles scanning and SDS manages downstream processing. Intake will also be supported via SFTP, with specific configurations for SDS-hosted SFTP, including a PUSH/PULL connectivity model, defined folder structures (e.g., /in/EDI/999, /in/eligibilityFile), and file naming conventions. Other potential intake methods like email, fax, and web uploads are generally available within the SDS platform as depicted in the workflow diagrams.\n\nOnce documents are ingested, SDS will perform data capture, including OCR and data extraction. The workflow diagrams illustrate critical processing steps such as Eligibility Matching and Data Validation. The BRD specifies that documents not part of the agreed scope (Out of Scope mail) will be handled separately. The system will sort documents by type and apply business rules for routing and processing, aiming to generate outputs like 837 claim files and other relevant data exports.\n\nWhile the BRD and Project Plan mention 'Client access, Reporting Requirement and SLA' as tasks to be addressed, specific details regarding reporting requirements and Service Level Agreements (SLAs) are not yet fully defined in the provided documents. The Project Plan indicates these will be addressed during the Implementation phase, suggesting a need for further definition and client sign-off to ensure operational readiness and client satisfaction.\n\nThe project is currently estimated to be in the TG0 (Design) stage, based on the Project Plan's timeline and the presence of a workflow diagram and an early-stage BRD (v0.1). However, significant gaps exist, particularly in the BRD regarding specific client responsibilities for pre-scan preparation and indexing. The workflow diagram is noted as illustrative, requiring confirmation against a 'Proposed Solution'. Key deliverables for TG-1, such as detailed configuration documentation and reporting requirements, are not yet evident. The critical path forward involves resolving these documentation gaps, finalizing design specifications, and proceeding with implementation tasks.",
+  "workflow_narrative": "The client engagement with DEF Insurance involves the implementation of a Virtual Mailroom system designed to automate document processing and claims management. Smart Data Solutions (SDS) is tasked with delivering a streamlined workflow that enhances operational efficiency and reduces manual handling of documents. The project is currently in the initiation phase, with foundational documents such as the High-Level Critical Path Project Plan and the Business Requirements Document (BRD) being developed.\n\nThe document intake process will involve the automated capture of incoming documents, which will be classified and routed based on predefined criteria. This will facilitate quicker processing times and improve accuracy in claims management. The project plan outlines the critical path for these processes, although it currently lacks detailed task descriptions that would guide the implementation team.\n\nData processing will include the extraction of relevant information from documents, which will then be mapped to the appropriate workflows. The BRD is crucial for defining these workflows, but its current draft status means that specific requirements are still to be determined. This could pose risks to the project timeline if not addressed promptly.\n\nReporting and SLA documentation will be essential for tracking performance metrics and ensuring compliance with client expectations. The project plan indicates the need for these documents, but they have not yet been developed. Addressing this gap will be critical for maintaining transparency with the client.\n\nCurrently, the project is facing challenges due to the incomplete BRD, which could lead to misalignment on project requirements. The next steps involve finalizing the BRD and ensuring that all stakeholders are aligned on the project scope and deliverables. This will be vital for moving forward with the implementation phase effectively.",
   "checklist": [
     {
       "deliverable": "Business Requirements Document (BRD)",
       "stage_gate": "TG-1 (Initiation)",
       "responsibility": "Business Analyst",
-      "status": "PARTIAL",
-      "evidence_files": [
-        "ABC Corporation 25080 BRD v0.1.docx"
-      ],
-      "confidence": "HIGH",
-      "notes": "The BRD v0.1 exists but is incomplete, containing placeholders for critical client responsibilities and lacking details on reporting requirements and SLAs. It serves as a foundation but requires significant updates and sign-off.",
+      "status": "MISSING",
+      "evidence_files": [],
+      "confidence": "LOW",
+      "notes": "The BRD is largely empty and lacks defined business requirements. It needs to be completed to move forward.",
       "priority": "P1",
-      "estimated_effort": "Large",
+      "estimated_effort": "Large (3+ days)",
       "is_blocker": true,
-      "evidence_trail": [
-        {
-          "source_file": "ABC Corporation 25080 BRD v0.1.docx",
-          "section_or_location": "Section: Client Performed Scanning Integration",
-          "excerpt": "[Insert specifics and responsibilities, equipment setup, barcode usage, file packaging rules, etc.]",
-          "assessment": "This placeholder indicates that the BRD is not yet complete and lacks crucial details regarding client responsibilities for pre-scan preparation, which is essential for defining the end-to-end workflow and configuration."
-        },
-        {
-          "source_file": "ABC Corporation 25080 BRD v0.1.docx",
-          "section_or_location": "Section: Purpose and High-Level Scope of Services",
-          "excerpt": "The purpose of this Business Requirements Document (BRD) is to capture the detailed requirements aligning with the scope, and deliverables for the transition and ongoing management of Mailroom and Data Capture Operations for . As part of the engagement, Smart Data Solutions (SDS) will assume responsibility for the intake, processing, digitization, and secure transmission of incoming mail and related documents.",
-          "assessment": "Confirms the existence and general purpose of the BRD, but the content is high-level and lacks specific detail, as evidenced by the version number (v0.1) and placeholders."
-        }
-      ],
+      "evidence_trail": [],
       "scores": {
-        "completeness": 58,
-        "quality": 84,
-        "consistency": 95,
-        "freshness": 30,
-        "readiness": 68
+        "completeness": 0,
+        "quality": 0,
+        "consistency": 0,
+        "freshness": 0,
+        "readiness": 0
       }
     },
     {
       "deliverable": "High-Level Project Plan / Critical Path",
       "stage_gate": "TG-1 (Initiation)",
       "responsibility": "PM",
-      "status": "PRESENT",
+      "status": "PARTIAL",
       "evidence_files": [
-        "ABC Corporation - High-Level Critical Path Project Plan.docx"
+        "MY_Insurance_-_High-Level_Critical_Path_Project_Plan.docx"
       ],
-      "confidence": "HIGH",
-      "notes": "A detailed project plan outlining phases, timelines, and key activities is provided. It includes estimated durations and highlights overlapping tasks, serving as a clear roadmap for the project.",
-      "priority": "P1",
-      "estimated_effort": "Small",
+      "confidence": "MEDIUM",
+      "notes": "The project plan outlines the timeline but lacks detailed task descriptions. It needs to be expanded to provide clarity.",
+      "priority": "P2",
+      "estimated_effort": "Medium (1-3 days)",
       "is_blocker": false,
       "evidence_trail": [
         {
-          "source_file": "ABC Corporation - High-Level Critical Path Project Plan.docx",
-          "section_or_location": "Section: Initiation (4/30 - 6/6)",
-          "excerpt": "ABC Corporation \u2013 Virtual Mailroom Phase 1\nInitiation (4/30 - 6/6)\nSOWs signed off\u00a0(1 day)\nDiscovery Sessions (Outcome - Executive Project Plan) (10 days can overlap w/BRD)\nBRD sessions (Outcome - Approved Requirements for Implementation) (20 days can overlap w/discovery)",
-          "assessment": "This excerpt clearly defines the initiation phase, its dates, and key activities, demonstrating the existence of a high-level project plan and critical path."
+          "source_file": "MY_Insurance_-_High-Level_Critical_Path_Project_Plan.docx",
+          "section_or_location": "Section: Project Timeline",
+          "excerpt": "The document provides a high-level overview of the project timeline and key milestones for the Virtual Mailroom implementation.",
+          "assessment": "This excerpt confirms the existence of a project timeline but highlights the lack of detailed task descriptions."
         }
       ],
       "scores": {
-        "completeness": 86,
-        "quality": 78,
+        "completeness": 48,
+        "quality": 63,
         "consistency": 95,
         "freshness": 70,
-        "readiness": 83
+        "readiness": 64
       }
     },
     {
       "deliverable": "Client Kickoff / Scope Presentation",
       "stage_gate": "TG-1 (Initiation)",
       "responsibility": "PM",
+      "status": "MISSING",
       "evidence_files": [],
       "confidence": "LOW",
-      "notes": "While the project plan implies initiation activities like SOW sign-off and discovery sessions, there is no explicit documentation or mention of a formal client kickoff meeting or scope presentation within the provided documents.",
-      "priority": "P2",
-      "estimated_effort": "Medium",
-      "is_blocker": false,
+      "notes": "No evidence of a kickoff meeting or scope presentation has been documented. This is essential for stakeholder alignment.",
+      "priority": "P1",
+      "estimated_effort": "Medium (1-3 days)",
+      "is_blocker": true,
       "evidence_trail": [],
-      "status": "MISSING",
       "scores": {
         "completeness": 0,
         "quality": 0,
@@ -278,49 +129,34 @@
       "deliverable": "Security & Access Control Documentation",
       "stage_gate": "TG-1 (Initiation)",
       "responsibility": "Engineering",
-      "status": "PARTIAL",
-      "evidence_files": [
-        "ABC Corporation 25080 BRD v0.1.docx"
-      ],
-      "confidence": "MEDIUM",
-      "notes": "The BRD mentions SFTP connectivity details including URL, username, port, and SSH key, and IP whitelisting. However, comprehensive security and access control documentation beyond these SFTP specifics is not evident.",
-      "priority": "P2",
-      "estimated_effort": "Medium",
-      "is_blocker": false,
-      "evidence_trail": [
-        {
-          "source_file": "ABC Corporation 25080 BRD v0.1.docx",
-          "section_or_location": "Section: SFTP Intake - Connectivity",
-          "excerpt": "SDS supports flexible SFTP configurations, including pull/push or push/push connectivity. We recommend a push/push model for enhanced control, reliability, and monitoring. SDS will establish the connection and provide a configuration form to be completed by the ABC Corporation, which captures connectivity preferences, IP whitelisting, folder structures, and authorization details.",
-          "assessment": "This excerpt confirms that connectivity preferences and IP whitelisting are considered, indicating some level of security planning for SFTP. However, it does not constitute full security and access control documentation."
-        },
-        {
-          "source_file": "ABC Corporation 25080 BRD v0.1.docx",
-          "section_or_location": "Section: SFTP Intake - Connectivity",
-          "excerpt": "SDS-hosted SFTP (Test/Production)\nURL: ftp.smart-data-solutions.com\nUsername: ABC Corporationftp\nPort: 22\nSSH Key: True\nIP Address(es)/Range for Whitelisting1: 20.113.486.111",
-          "assessment": "Provides specific technical details for SFTP access, including IP whitelisting, which are components of access control. However, it lacks broader security policies or detailed access matrices."
-        }
-      ],
+      "status": "MISSING",
+      "evidence_files": [],
+      "confidence": "LOW",
+      "notes": "No documentation regarding security and access controls has been provided. This is critical for compliance.",
+      "priority": "P1",
+      "estimated_effort": "Large (3+ days)",
+      "is_blocker": true,
+      "evidence_trail": [],
       "scores": {
-        "completeness": 58,
-        "quality": 69,
-        "consistency": 95,
-        "freshness": 85,
-        "readiness": 72
+        "completeness": 0,
+        "quality": 0,
+        "consistency": 0,
+        "freshness": 0,
+        "readiness": 0
       }
     },
     {
       "deliverable": "Training & Process Awareness Documentation",
       "stage_gate": "TG-1 (Initiation)",
       "responsibility": "PM",
+      "status": "MISSING",
       "evidence_files": [],
       "confidence": "LOW",
-      "notes": "There is no mention or evidence of training materials or process awareness documentation within the provided files. This is a critical deliverable for client adoption and operational handover.",
-      "priority": "P1",
-      "estimated_effort": "Large",
+      "notes": "No training materials or process awareness documentation has been created. This is necessary for user adoption.",
+      "priority": "P2",
+      "estimated_effort": "Medium (1-3 days)",
       "is_blocker": false,
       "evidence_trail": [],
-      "status": "MISSING",
       "scores": {
         "completeness": 0,
         "quality": 0,
@@ -333,49 +169,34 @@
       "deliverable": "Workflow / Process Flow Diagram",
       "stage_gate": "TG0 (Design)",
       "responsibility": "Engineering",
-      "status": "PARTIAL",
-      "evidence_files": [
-        "ABC Corporation -WF Diagram.vsdx"
-      ],
-      "confidence": "MEDIUM",
-      "notes": "Multiple workflow diagrams are provided, illustrating various aspects of the process. However, the diagrams are explicitly marked as 'illustrative' and not the definitive 'Proposed Solution', indicating they are a starting point but not a final design.",
+      "status": "MISSING",
+      "evidence_files": [],
+      "confidence": "LOW",
+      "notes": "No workflow diagrams have been created. This is essential for visualizing the process.",
       "priority": "P1",
-      "estimated_effort": "Medium",
+      "estimated_effort": "Large (3+ days)",
       "is_blocker": true,
-      "evidence_trail": [
-        {
-          "source_file": "ABC Corporation -WF Diagram.vsdx",
-          "section_or_location": "WORKFLOW PAGE 2",
-          "excerpt": "*This is for illustrative purposes only. See \u2018Proposed Solution\u2019 for details on what SDS will be implementing.*",
-          "assessment": "This disclaimer clearly states the diagram is illustrative and not the final design, meaning it cannot be fully relied upon for implementation without further definition of the 'Proposed Solution'."
-        },
-        {
-          "source_file": "ABC Corporation -WF Diagram.vsdx",
-          "section_or_location": "WORKFLOW PAGE 1",
-          "excerpt": "Flow: Image Import \u2192 Data Capture \u2192 Eligibility Matching \u2192 Match \u2192 Reject Letter \u2192 Fail \u2192 Original Submitter \u2192 Pass \u2192 Data Export \u2192 837 \u2192 Sorting \u2192 Data Validation \u2192 Valid \u2192 Pass \u2192 Fail \u2192 Client Scanner \u2192 Open / Prep / Batch \u2192 Scan \u2192 Reject Review \u2192 Client",
-          "assessment": "Provides a visual representation of a potential workflow, covering key stages from intake to export. This serves as a basis for design discussions but lacks specific configuration details for ABC Corporation."
-        }
-      ],
+      "evidence_trail": [],
       "scores": {
-        "completeness": 58,
-        "quality": 69,
-        "consistency": 95,
-        "freshness": 85,
-        "readiness": 72
+        "completeness": 0,
+        "quality": 0,
+        "consistency": 0,
+        "freshness": 0,
+        "readiness": 0
       }
     },
     {
       "deliverable": "Data Mapping Document",
       "stage_gate": "TG0 (Design)",
       "responsibility": "Engineering",
+      "status": "MISSING",
       "evidence_files": [],
       "confidence": "LOW",
-      "notes": "No data mapping document is present. While the BRD mentions input/output file specifications and the project plan lists 'Sync-up on Input and Output file specifications', the actual mapping details are missing.",
+      "notes": "No data mapping documentation has been provided. This is critical for ensuring data flows correctly.",
       "priority": "P1",
-      "estimated_effort": "Large",
+      "estimated_effort": "Large (3+ days)",
       "is_blocker": true,
       "evidence_trail": [],
-      "status": "MISSING",
       "scores": {
         "completeness": 0,
         "quality": 0,
@@ -388,49 +209,34 @@
       "deliverable": "Technical Design Specification",
       "stage_gate": "TG0 (Design)",
       "responsibility": "Engineering",
-      "evidence_files": [
-        "ABC Corporation -WF Diagram.vsdx",
-        "ABC Corporation 25080 BRD v0.1.docx"
-      ],
-      "confidence": "MEDIUM",
-      "notes": "The BRD provides some technical details for SFTP connectivity and client-performed scanning integration. The WF Diagram offers a high-level process flow. However, a comprehensive Technical Design Specification detailing system architecture, integrations, and specific configurations is not present.",
+      "status": "MISSING",
+      "evidence_files": [],
+      "confidence": "LOW",
+      "notes": "No technical design specifications have been documented. This is necessary for guiding development.",
       "priority": "P1",
-      "estimated_effort": "Large",
+      "estimated_effort": "Large (3+ days)",
       "is_blocker": true,
-      "evidence_trail": [
-        {
-          "source_file": "ABC Corporation 25080 BRD v0.1.docx",
-          "section_or_location": "Section: SFTP Intake - Connectivity",
-          "excerpt": "SDS-hosted SFTP (Test/Production)\nURL: ftp.smart-data-solutions.com\nUsername: ABC Corporationftp\nPort: 22\nSSH Key: True\nIP Address(es)/Range for Whitelisting1: 20.113.486.111",
-          "assessment": "Provides specific technical configuration details for SFTP, which is a component of a technical design. However, it lacks the broader scope of a full TDS."
-        },
-        {
-          "source_file": "ABC Corporation -WF Diagram.vsdx",
-          "section_or_location": "WORKFLOW PAGE 1",
-          "excerpt": "Flow: Image Import \u2192 Data Capture \u2192 Eligibility Matching \u2192 Match \u2192 Reject Letter \u2192 Fail \u2192 Original Submitter \u2192 Pass \u2192 Data Export \u2192 837 \u2192 Sorting \u2192 Data Validation \u2192 Valid \u2192 Pass \u2192 Fail \u2192 Client Scanner \u2192 Open / Prep / Batch \u2192 Scan \u2192 Reject Review \u2192 Client",
-          "assessment": "This workflow diagram outlines the process flow, which is a key element of a technical design, but it is high-level and marked as illustrative, not a definitive specification."
-        }
-      ],
+      "evidence_trail": [],
       "scores": {
         "completeness": 0,
         "quality": 0,
-        "consistency": 95,
-        "freshness": 85,
-        "readiness": 32
+        "consistency": 0,
+        "freshness": 0,
+        "readiness": 0
       }
     },
     {
       "deliverable": "BRD Sign-off",
       "stage_gate": "TG0 (Design)",
       "responsibility": "Business Analyst / PM",
+      "status": "MISSING",
       "evidence_files": [],
       "confidence": "LOW",
-      "notes": "The BRD is version v0.1 and contains placeholders, indicating it is not finalized. There is no evidence of client sign-off on the BRD.",
+      "notes": "No sign-off on the BRD has been documented. This is essential for moving forward.",
       "priority": "P1",
-      "estimated_effort": "Small",
+      "estimated_effort": "Medium (1-3 days)",
       "is_blocker": true,
       "evidence_trail": [],
-      "status": "MISSING",
       "scores": {
         "completeness": 0,
         "quality": 0,
@@ -443,14 +249,14 @@
       "deliverable": "Implementation / Transition Workbook",
       "stage_gate": "TG1 (Implementation)",
       "responsibility": "PM / Engineering",
+      "status": "MISSING",
       "evidence_files": [],
       "confidence": "LOW",
-      "notes": "No implementation or transition workbook is mentioned or provided. This is a key document for detailing the steps and responsibilities for moving from design to production.",
-      "priority": "P1",
-      "estimated_effort": "Large",
-      "is_blocker": true,
+      "notes": "No implementation workbook has been created. This is necessary for tracking implementation tasks.",
+      "priority": "P2",
+      "estimated_effort": "Medium (1-3 days)",
+      "is_blocker": false,
       "evidence_trail": [],
-      "status": "MISSING",
       "scores": {
         "completeness": 0,
         "quality": 0,
@@ -463,42 +269,34 @@
       "deliverable": "Configuration Documentation",
       "stage_gate": "TG1 (Implementation)",
       "responsibility": "Engineering",
-      "evidence_files": [
-        "ABC Corporation 25080 BRD v0.1.docx"
-      ],
-      "confidence": "MEDIUM",
-      "notes": "The BRD provides some configuration details for SFTP connectivity and intake folder structures. However, comprehensive configuration documentation for mailroom, workflow, and other system settings is not present.",
+      "status": "MISSING",
+      "evidence_files": [],
+      "confidence": "LOW",
+      "notes": "No configuration documentation has been provided. This is critical for system setup.",
       "priority": "P1",
-      "estimated_effort": "Large",
+      "estimated_effort": "Large (3+ days)",
       "is_blocker": true,
-      "evidence_trail": [
-        {
-          "source_file": "ABC Corporation 25080 BRD v0.1.docx",
-          "section_or_location": "Section: SFTP Intake - Intake Folder Structure",
-          "excerpt": "For this implementation, the intake folder structure on the SDS-hosted SFTP will be configured as follows:\nRoot Folder: /ABC Corporationftp/\nProduction Folders:\n/in/EDI/999\n/in/eligibilityFile\nTest Folder1:\n/in/test",
-          "assessment": "This excerpt provides specific details on the SFTP intake folder structure, which is a form of configuration documentation. However, it is limited to folder structure and does not cover broader system configurations."
-        }
-      ],
+      "evidence_trail": [],
       "scores": {
         "completeness": 0,
         "quality": 0,
-        "consistency": 95,
-        "freshness": 85,
-        "readiness": 32
+        "consistency": 0,
+        "freshness": 0,
+        "readiness": 0
       }
     },
     {
       "deliverable": "Reporting Requirements & SLA Documentation",
       "stage_gate": "TG1 (Implementation)",
       "responsibility": "PM",
+      "status": "MISSING",
       "evidence_files": [],
       "confidence": "LOW",
-      "notes": "The Project Plan mentions 'Client access, Reporting Requirement and SLA' as a task, but no specific documentation detailing these requirements or SLAs is provided.",
-      "priority": "P1",
-      "estimated_effort": "Medium",
-      "is_blocker": true,
+      "notes": "No reporting requirements or SLA documentation has been created. This is necessary for performance tracking.",
+      "priority": "P2",
+      "estimated_effort": "Medium (1-3 days)",
+      "is_blocker": false,
       "evidence_trail": [],
-      "status": "MISSING",
       "scores": {
         "completeness": 0,
         "quality": 0,
@@ -511,105 +309,74 @@
       "deliverable": "Mailroom / Workflow Configuration",
       "stage_gate": "TG1 (Implementation)",
       "responsibility": "Engineering",
-      "evidence_files": [
-        "ABC Corporation -WF Diagram.vsdx",
-        "ABC Corporation 25080 BRD v0.1.docx"
-      ],
-      "confidence": "MEDIUM",
-      "notes": "The WF Diagram provides a high-level overview of the workflow, and the BRD outlines intake channels and SFTP structure. However, detailed configuration specifications for the mailroom and specific workflow rules are not present.",
+      "status": "MISSING",
+      "evidence_files": [],
+      "confidence": "LOW",
+      "notes": "No mailroom configuration documentation has been provided. This is critical for system functionality.",
       "priority": "P1",
-      "estimated_effort": "Large",
+      "estimated_effort": "Large (3+ days)",
       "is_blocker": true,
-      "evidence_trail": [
-        {
-          "source_file": "ABC Corporation -WF Diagram.vsdx",
-          "section_or_location": "WORKFLOW PAGE 2",
-          "excerpt": "Flow: SDS Mailroom \u2192 Email \u2192 Fax \u2192 Web Upload \u2192 Open / Prep / Batch \u2192 Scan \u2192 Auto forward to SDS \u2192 Image Import \u2192 SDS pulls via API \u2192 Upload via QuickClaim \u2192 Data Capture \u2192 Eligibility Matching \u2192 Provider Matching \u2192 Match \u2192 277CA or Reject Letter \u2192 Fail \u2192 Original Submitter \u2192 Pass \u2192 Data Export \u2192 837",
-          "assessment": "This illustrates the mailroom and workflow process flow, which is a prerequisite for configuration. However, it lacks the specific parameters and settings required for actual configuration."
-        },
-        {
-          "source_file": "ABC Corporation 25080 BRD v0.1.docx",
-          "section_or_location": "Section: SFTP Intake - Intake Folder Structure",
-          "excerpt": "For this implementation, the intake folder structure on the SDS-hosted SFTP will be configured as follows:\nRoot Folder: /ABC Corporationftp/\nProduction Folders:\n/in/EDI/999\n/in/eligibilityFile\nTest Folder1:\n/in/test",
-          "assessment": "Details the SFTP intake folder structure, which is a specific configuration element for the mailroom intake process."
-        }
-      ],
+      "evidence_trail": [],
       "scores": {
         "completeness": 0,
         "quality": 0,
-        "consistency": 95,
-        "freshness": 85,
-        "readiness": 32
+        "consistency": 0,
+        "freshness": 0,
+        "readiness": 0
       }
     },
     {
       "deliverable": "Eligibility & Claims Configuration",
       "stage_gate": "TG1 (Implementation)",
       "responsibility": "Engineering",
-      "evidence_files": [
-        "ABC Corporation 25080 BRD v0.1.docx"
-      ],
-      "confidence": "MEDIUM",
-      "notes": "The BRD mentions 'Eligibility Matching' in the context of workflow and lists 'Sample Files: One week\u2019s worth of each document type (e.g., claims, EOBs, correspondence)' and 'Eligibility & Provider Files: Current format/layout and sample data' as critical early deliverables. However, specific configuration details for eligibility and claims processing are not provided.",
+      "status": "MISSING",
+      "evidence_files": [],
+      "confidence": "LOW",
+      "notes": "No eligibility and claims configuration documentation has been provided. This is necessary for claims processing.",
       "priority": "P1",
-      "estimated_effort": "Large",
+      "estimated_effort": "Large (3+ days)",
       "is_blocker": true,
-      "evidence_trail": [
-        {
-          "source_file": "ABC Corporation 25080 BRD v0.1.docx",
-          "section_or_location": "Section: Critical Deliverables to Ensure a Strong Start",
-          "excerpt": "Sample Files: One week\u2019s worth of each document type (e.g., claims, EOBs, correspondence)\nProcess Documentation: Existing workflows, routing logic, intake handling guides, and decision points\nEligibility & Provider Files: Current format/layout and sample data",
-          "assessment": "Highlights the need for sample data and documentation related to eligibility and claims, indicating these are key inputs for configuration. However, it does not provide the configuration details themselves."
-        }
-      ],
+      "evidence_trail": [],
       "scores": {
         "completeness": 0,
         "quality": 0,
-        "consistency": 95,
-        "freshness": 85,
-        "readiness": 32
+        "consistency": 0,
+        "freshness": 0,
+        "readiness": 0
       }
     },
     {
       "deliverable": "UAT Plan & Test Cases",
       "stage_gate": "TG2 (Test)",
       "responsibility": "Engineering / PM",
-      "evidence_files": [
-        "ABC Corporation - High-Level Critical Path Project Plan.docx"
-      ],
-      "confidence": "MEDIUM",
-      "notes": "The Project Plan mentions 'Preparing test cases and samples' (10 days) and 'UAT by client' (10 days) within the Testing phase. However, a formal UAT Plan and specific test cases are not provided.",
+      "status": "MISSING",
+      "evidence_files": [],
+      "confidence": "LOW",
+      "notes": "No UAT plan or test cases have been documented. This is essential for validating the implementation.",
       "priority": "P1",
-      "estimated_effort": "Large",
+      "estimated_effort": "Large (3+ days)",
       "is_blocker": true,
-      "evidence_trail": [
-        {
-          "source_file": "ABC Corporation - High-Level Critical Path Project Plan.docx",
-          "section_or_location": "Section: Testing (7/7 - 8/22)",
-          "excerpt": "Preparing test cases and samples\u00a0(10 days can overlap with any of above)\nUAT by client\u00a0(10 days)",
-          "assessment": "This indicates that test case preparation and UAT are planned activities. However, it does not confirm the existence of a formal UAT Plan or documented test cases."
-        }
-      ],
+      "evidence_trail": [],
       "scores": {
         "completeness": 0,
         "quality": 0,
-        "consistency": 95,
-        "freshness": 70,
-        "readiness": 30
+        "consistency": 0,
+        "freshness": 0,
+        "readiness": 0
       }
     },
     {
       "deliverable": "UAT Sign-off / Testing Evidence",
       "stage_gate": "TG2 (Test)",
       "responsibility": "Engineering",
+      "status": "MISSING",
       "evidence_files": [],
       "confidence": "LOW",
-      "notes": "As UAT is planned but no plan or test cases exist, there is no evidence of UAT sign-off or testing evidence.",
+      "notes": "No UAT sign-off or testing evidence has been documented. This is critical for project validation.",
       "priority": "P1",
-      "estimated_effort": "Medium",
+      "estimated_effort": "Large (3+ days)",
       "is_blocker": true,
       "evidence_trail": [],
-      "status": "MISSING",
       "scores": {
         "completeness": 0,
         "quality": 0,
@@ -622,14 +389,14 @@
       "deliverable": "TPM / Compliance Checklist",
       "stage_gate": "TG2 (Test)",
       "responsibility": "PM / Engineer",
+      "status": "MISSING",
       "evidence_files": [],
       "confidence": "LOW",
-      "notes": "There is no mention or evidence of a TPM or compliance checklist within the provided documents.",
-      "priority": "P2",
-      "estimated_effort": "Medium",
-      "is_blocker": false,
+      "notes": "No compliance checklist has been created. This is necessary for ensuring regulatory adherence.",
+      "priority": "P1",
+      "estimated_effort": "Medium (1-3 days)",
+      "is_blocker": true,
       "evidence_trail": [],
-      "status": "MISSING",
       "scores": {
         "completeness": 0,
         "quality": 0,
@@ -642,42 +409,34 @@
       "deliverable": "Functional & Volume Testing Evidence",
       "stage_gate": "TG2 (Test)",
       "responsibility": "Engineering",
-      "evidence_files": [
-        "ABC Corporation - High-Level Critical Path Project Plan.docx"
-      ],
-      "confidence": "MEDIUM",
-      "notes": "The Project Plan lists 'Functional testing of non-claims' and 'Volume testing' as activities. However, no specific evidence or documentation of these tests having been performed or their results is provided.",
+      "status": "MISSING",
+      "evidence_files": [],
+      "confidence": "LOW",
+      "notes": "No functional or volume testing evidence has been documented. This is critical for validating system performance.",
       "priority": "P1",
-      "estimated_effort": "Medium",
+      "estimated_effort": "Large (3+ days)",
       "is_blocker": true,
-      "evidence_trail": [
-        {
-          "source_file": "ABC Corporation - High-Level Critical Path Project Plan.docx",
-          "section_or_location": "Section: Testing (7/7 - 8/22)",
-          "excerpt": "Functional testing of non-claims\u00a0(5 days)\nVolume testing\u00a0(15 \u201320 days)",
-          "assessment": "Confirms that functional and volume testing are planned activities within the project timeline. However, it does not provide any evidence that these tests have been executed or documented."
-        }
-      ],
+      "evidence_trail": [],
       "scores": {
         "completeness": 0,
         "quality": 0,
-        "consistency": 95,
-        "freshness": 70,
-        "readiness": 30
+        "consistency": 0,
+        "freshness": 0,
+        "readiness": 0
       }
     },
     {
       "deliverable": "M2P / Go-Live Sign-off",
       "stage_gate": "TG3 (Deploy/Warranty)",
       "responsibility": "PM / Tech Lead",
+      "status": "MISSING",
       "evidence_files": [],
       "confidence": "LOW",
-      "notes": "As the project appears to be in the Design phase with many implementation and testing deliverables missing, there is no evidence of a Go-Live sign-off.",
+      "notes": "No Go-Live sign-off has been documented. This is essential for project closure.",
       "priority": "P1",
-      "estimated_effort": "Small",
+      "estimated_effort": "Medium (1-3 days)",
       "is_blocker": true,
       "evidence_trail": [],
-      "status": "MISSING",
       "scores": {
         "completeness": 0,
         "quality": 0,
@@ -690,14 +449,14 @@
       "deliverable": "Post-Go-Live Warranty Checklist",
       "stage_gate": "TG3 (Deploy/Warranty)",
       "responsibility": "PM",
+      "status": "MISSING",
       "evidence_files": [],
       "confidence": "LOW",
-      "notes": "No documentation related to post-go-live warranty or checklists is available.",
+      "notes": "No post-Go-Live warranty checklist has been created. This is necessary for ensuring ongoing support.",
       "priority": "P2",
-      "estimated_effort": "Small",
+      "estimated_effort": "Medium (1-3 days)",
       "is_blocker": false,
       "evidence_trail": [],
-      "status": "MISSING",
       "scores": {
         "completeness": 0,
         "quality": 0,
@@ -710,14 +469,14 @@
       "deliverable": "Lessons Learned Document",
       "stage_gate": "TG3 (Deploy/Warranty)",
       "responsibility": "PM",
+      "status": "MISSING",
       "evidence_files": [],
       "confidence": "LOW",
-      "notes": "This deliverable is for post-deployment. As the project is in the design phase, no lessons learned document would exist yet.",
+      "notes": "No lessons learned document has been created. This is important for future projects.",
       "priority": "P3",
-      "estimated_effort": "Small",
+      "estimated_effort": "Medium (1-3 days)",
       "is_blocker": false,
       "evidence_trail": [],
-      "status": "MISSING",
       "scores": {
         "completeness": 0,
         "quality": 0,
@@ -730,14 +489,14 @@
       "deliverable": "Final Client Documentation Handoff",
       "stage_gate": "TG3 (Deploy/Warranty)",
       "responsibility": "PM",
+      "status": "MISSING",
       "evidence_files": [],
       "confidence": "LOW",
-      "notes": "This is a final deliverable. Given the project's current stage and numerous missing items, this is not yet available.",
-      "priority": "P3",
-      "estimated_effort": "Medium",
-      "is_blocker": false,
+      "notes": "No final documentation handoff has been documented. This is critical for project closure.",
+      "priority": "P1",
+      "estimated_effort": "Medium (1-3 days)",
+      "is_blocker": true,
       "evidence_trail": [],
-      "status": "MISSING",
       "scores": {
         "completeness": 0,
         "quality": 0,
@@ -749,209 +508,404 @@
   ],
   "gap_analysis": [
     {
-      "gap": "BRD v0.1 contains placeholders for critical client responsibilities regarding pre-scan document preparation and indexing (e.g., document separation, identification, sorting).",
+      "gap": "Business Requirements Document (BRD) is largely empty and lacks defined business requirements.",
       "impact": "HIGH",
-      "stage_gate": "TG0 (Design)",
-      "recommendation": "Schedule a dedicated session with ABC Corporation SMEs to define and document these specific responsibilities within the BRD. Update the BRD with concrete details and obtain client sign-off.",
+      "stage_gate": "TG-1 (Initiation)",
+      "recommendation": "Complete the BRD with detailed business requirements.",
       "responsible_party": "Business Analyst",
-      "estimated_effort": "Medium",
+      "estimated_effort": "Large (3+ days)",
       "dependencies": []
     },
     {
-      "gap": "Lack of detailed Technical Design Specification, Data Mapping Document, and finalized Workflow/Process Flow Diagram.",
+      "gap": "High-Level Project Plan lacks detailed task descriptions.",
+      "impact": "MEDIUM",
+      "stage_gate": "TG-1 (Initiation)",
+      "recommendation": "Expand the project plan to include detailed tasks and deadlines.",
+      "responsible_party": "PM",
+      "estimated_effort": "Medium (1-3 days)",
+      "dependencies": []
+    },
+    {
+      "gap": "No Client Kickoff / Scope Presentation has been documented.",
+      "impact": "HIGH",
+      "stage_gate": "TG-1 (Initiation)",
+      "recommendation": "Schedule and document a client kickoff meeting.",
+      "responsible_party": "PM",
+      "estimated_effort": "Medium (1-3 days)",
+      "dependencies": []
+    },
+    {
+      "gap": "No Security & Access Control Documentation has been provided.",
+      "impact": "HIGH",
+      "stage_gate": "TG-1 (Initiation)",
+      "recommendation": "Create security and access control documentation.",
+      "responsible_party": "Engineering",
+      "estimated_effort": "Large (3+ days)",
+      "dependencies": []
+    },
+    {
+      "gap": "No Training & Process Awareness Documentation has been created.",
+      "impact": "MEDIUM",
+      "stage_gate": "TG-1 (Initiation)",
+      "recommendation": "Develop training materials for user adoption.",
+      "responsible_party": "PM",
+      "estimated_effort": "Medium (1-3 days)",
+      "dependencies": []
+    },
+    {
+      "gap": "No Workflow / Process Flow Diagram has been created.",
       "impact": "HIGH",
       "stage_gate": "TG0 (Design)",
-      "recommendation": "Engineering team to develop a comprehensive Technical Design Specification, including detailed data mapping and finalize the workflow diagram based on the 'Proposed Solution' referenced in the Visio file. Obtain client review and sign-off.",
+      "recommendation": "Create a workflow/process flow diagram.",
       "responsible_party": "Engineering",
-      "estimated_effort": "Large",
-      "dependencies": [
-        "BRD Sign-off"
-      ]
+      "estimated_effort": "Large (3+ days)",
+      "dependencies": []
     },
     {
-      "gap": "Reporting Requirements & SLA Documentation is missing.",
+      "gap": "No Data Mapping Document has been provided.",
+      "impact": "HIGH",
+      "stage_gate": "TG0 (Design)",
+      "recommendation": "Develop a data mapping document.",
+      "responsible_party": "Engineering",
+      "estimated_effort": "Large (3+ days)",
+      "dependencies": []
+    },
+    {
+      "gap": "No Technical Design Specification has been documented.",
+      "impact": "HIGH",
+      "stage_gate": "TG0 (Design)",
+      "recommendation": "Create a technical design specification.",
+      "responsible_party": "Engineering",
+      "estimated_effort": "Large (3+ days)",
+      "dependencies": []
+    },
+    {
+      "gap": "No BRD Sign-off has been documented.",
+      "impact": "HIGH",
+      "stage_gate": "TG0 (Design)",
+      "recommendation": "Obtain sign-off on the BRD.",
+      "responsible_party": "Business Analyst / PM",
+      "estimated_effort": "Medium (1-3 days)",
+      "dependencies": []
+    },
+    {
+      "gap": "No Implementation / Transition Workbook has been created.",
+      "impact": "MEDIUM",
+      "stage_gate": "TG1 (Implementation)",
+      "recommendation": "Develop an implementation workbook.",
+      "responsible_party": "PM / Engineering",
+      "estimated_effort": "Medium (1-3 days)",
+      "dependencies": []
+    },
+    {
+      "gap": "No Configuration Documentation has been provided.",
       "impact": "HIGH",
       "stage_gate": "TG1 (Implementation)",
-      "recommendation": "Schedule a meeting with ABC Corporation to define and document all reporting requirements and Service Level Agreements (SLAs). Create a formal document for client review and sign-off.",
-      "responsible_party": "PM",
-      "estimated_effort": "Medium",
-      "dependencies": [
-        "BRD Sign-off"
-      ]
+      "recommendation": "Create configuration documentation.",
+      "responsible_party": "Engineering",
+      "estimated_effort": "Large (3+ days)",
+      "dependencies": []
     },
     {
-      "gap": "Absence of formal UAT Plan & Test Cases.",
+      "gap": "No Reporting Requirements & SLA Documentation has been created.",
+      "impact": "MEDIUM",
+      "stage_gate": "TG1 (Implementation)",
+      "recommendation": "Develop reporting requirements and SLA documentation.",
+      "responsible_party": "PM",
+      "estimated_effort": "Medium (1-3 days)",
+      "dependencies": []
+    },
+    {
+      "gap": "No Mailroom / Workflow Configuration documentation has been provided.",
+      "impact": "HIGH",
+      "stage_gate": "TG1 (Implementation)",
+      "recommendation": "Create mailroom/workflow configuration documentation.",
+      "responsible_party": "Engineering",
+      "estimated_effort": "Large (3+ days)",
+      "dependencies": []
+    },
+    {
+      "gap": "No Eligibility & Claims Configuration documentation has been provided.",
+      "impact": "HIGH",
+      "stage_gate": "TG1 (Implementation)",
+      "recommendation": "Develop eligibility and claims configuration documentation.",
+      "responsible_party": "Engineering",
+      "estimated_effort": "Large (3+ days)",
+      "dependencies": []
+    },
+    {
+      "gap": "No UAT Plan & Test Cases have been documented.",
       "impact": "HIGH",
       "stage_gate": "TG2 (Test)",
-      "recommendation": "Develop a comprehensive UAT Plan and detailed test cases based on the finalized requirements and technical design. Engage ABC Corporation for review and approval.",
+      "recommendation": "Create a UAT plan and test cases.",
       "responsible_party": "Engineering / PM",
-      "estimated_effort": "Large",
-      "dependencies": [
-        "Technical Design Specification",
-        "BRD Sign-off"
-      ]
-    },
-    {
-      "gap": "No evidence of Training & Process Awareness Documentation.",
-      "impact": "MEDIUM",
-      "stage_gate": "TG1 (Implementation)",
-      "recommendation": "Develop training materials and process documentation for ABC Corporation end-users and support staff. This should cover system usage, workflows, and support procedures.",
-      "responsible_party": "PM",
-      "estimated_effort": "Large",
-      "dependencies": [
-        "Configuration Documentation"
-      ]
-    },
-    {
-      "gap": "Security & Access Control Documentation beyond SFTP specifics is not comprehensive.",
-      "impact": "MEDIUM",
-      "stage_gate": "TG1 (Implementation)",
-      "recommendation": "Expand on the existing SFTP security details to include broader access control policies, user roles, and data security measures relevant to the SDS platform.",
-      "responsible_party": "Engineering",
-      "estimated_effort": "Medium",
+      "estimated_effort": "Large (3+ days)",
       "dependencies": []
     },
     {
-      "gap": "No formal Client Kickoff / Scope Presentation documented.",
-      "impact": "LOW",
-      "stage_gate": "TG-1 (Initiation)",
-      "recommendation": "Confirm if a client kickoff meeting occurred. If not, schedule one to formally align on scope, project plan, and expectations. Document the meeting outcomes.",
+      "gap": "No UAT Sign-off / Testing Evidence has been documented.",
+      "impact": "HIGH",
+      "stage_gate": "TG2 (Test)",
+      "recommendation": "Obtain UAT sign-off and document testing evidence.",
+      "responsible_party": "Engineering",
+      "estimated_effort": "Large (3+ days)",
+      "dependencies": []
+    },
+    {
+      "gap": "No TPM / Compliance Checklist has been created.",
+      "impact": "HIGH",
+      "stage_gate": "TG2 (Test)",
+      "recommendation": "Develop a TPM/compliance checklist.",
+      "responsible_party": "PM / Engineer",
+      "estimated_effort": "Medium (1-3 days)",
+      "dependencies": []
+    },
+    {
+      "gap": "No Functional & Volume Testing Evidence has been documented.",
+      "impact": "HIGH",
+      "stage_gate": "TG2 (Test)",
+      "recommendation": "Document functional and volume testing evidence.",
+      "responsible_party": "Engineering",
+      "estimated_effort": "Large (3+ days)",
+      "dependencies": []
+    },
+    {
+      "gap": "No M2P / Go-Live Sign-off has been documented.",
+      "impact": "HIGH",
+      "stage_gate": "TG3 (Deploy/Warranty)",
+      "recommendation": "Obtain Go-Live sign-off.",
+      "responsible_party": "PM / Tech Lead",
+      "estimated_effort": "Medium (1-3 days)",
+      "dependencies": []
+    },
+    {
+      "gap": "No Post-Go-Live Warranty Checklist has been created.",
+      "impact": "MEDIUM",
+      "stage_gate": "TG3 (Deploy/Warranty)",
+      "recommendation": "Develop a post-Go-Live warranty checklist.",
       "responsible_party": "PM",
-      "estimated_effort": "Small",
+      "estimated_effort": "Medium (1-3 days)",
+      "dependencies": []
+    },
+    {
+      "gap": "No Lessons Learned Document has been created.",
+      "impact": "LOW",
+      "stage_gate": "TG3 (Deploy/Warranty)",
+      "recommendation": "Create a lessons learned document.",
+      "responsible_party": "PM",
+      "estimated_effort": "Medium (1-3 days)",
+      "dependencies": []
+    },
+    {
+      "gap": "No Final Client Documentation Handoff has been documented.",
+      "impact": "HIGH",
+      "stage_gate": "TG3 (Deploy/Warranty)",
+      "recommendation": "Document the final client documentation handoff.",
+      "responsible_party": "PM",
+      "estimated_effort": "Medium (1-3 days)",
       "dependencies": []
     }
   ],
   "action_items": [
     {
-      "action": "Schedule and conduct a session with ABC Corporation SMEs to define and document pre-scan preparation and indexing responsibilities in the BRD.",
+      "action": "Complete the Business Requirements Document (BRD) with detailed business requirements.",
       "owner": "Business Analyst",
       "priority": "P1",
-      "stage_gate": "TG0 (Design)",
+      "stage_gate": "TG-1 (Initiation)",
       "deliverable": "Business Requirements Document (BRD)",
-      "estimated_effort": "Medium"
+      "estimated_effort": "Large (3+ days)"
     },
     {
-      "action": "Develop a comprehensive Technical Design Specification, including detailed data mapping and finalize the workflow diagram based on the 'Proposed Solution'.",
+      "action": "Expand the High-Level Project Plan to include detailed tasks and deadlines.",
+      "owner": "PM",
+      "priority": "P2",
+      "stage_gate": "TG-1 (Initiation)",
+      "deliverable": "High-Level Project Plan / Critical Path",
+      "estimated_effort": "Medium (1-3 days)"
+    },
+    {
+      "action": "Schedule and document a client kickoff meeting.",
+      "owner": "PM",
+      "priority": "P1",
+      "stage_gate": "TG-1 (Initiation)",
+      "deliverable": "Client Kickoff / Scope Presentation",
+      "estimated_effort": "Medium (1-3 days)"
+    },
+    {
+      "action": "Create security and access control documentation.",
+      "owner": "Engineering",
+      "priority": "P1",
+      "stage_gate": "TG-1 (Initiation)",
+      "deliverable": "Security & Access Control Documentation",
+      "estimated_effort": "Large (3+ days)"
+    },
+    {
+      "action": "Develop training materials for user adoption.",
+      "owner": "PM",
+      "priority": "P2",
+      "stage_gate": "TG-1 (Initiation)",
+      "deliverable": "Training & Process Awareness Documentation",
+      "estimated_effort": "Medium (1-3 days)"
+    },
+    {
+      "action": "Create a workflow/process flow diagram.",
+      "owner": "Engineering",
+      "priority": "P1",
+      "stage_gate": "TG0 (Design)",
+      "deliverable": "Workflow / Process Flow Diagram",
+      "estimated_effort": "Large (3+ days)"
+    },
+    {
+      "action": "Develop a data mapping document.",
+      "owner": "Engineering",
+      "priority": "P1",
+      "stage_gate": "TG0 (Design)",
+      "deliverable": "Data Mapping Document",
+      "estimated_effort": "Large (3+ days)"
+    },
+    {
+      "action": "Create a technical design specification.",
       "owner": "Engineering",
       "priority": "P1",
       "stage_gate": "TG0 (Design)",
       "deliverable": "Technical Design Specification",
-      "estimated_effort": "Large"
+      "estimated_effort": "Large (3+ days)"
     },
     {
-      "action": "Define and document Reporting Requirements & SLAs with ABC Corporation.",
-      "owner": "PM",
-      "priority": "P1",
-      "stage_gate": "TG1 (Implementation)",
-      "deliverable": "Reporting Requirements & SLA Documentation",
-      "estimated_effort": "Medium"
-    },
-    {
-      "action": "Develop a formal UAT Plan and detailed test cases.",
-      "owner": "Engineering / PM",
-      "priority": "P1",
-      "stage_gate": "TG2 (Test)",
-      "deliverable": "UAT Plan & Test Cases",
-      "estimated_effort": "Large"
-    },
-    {
-      "action": "Obtain client sign-off on the updated BRD.",
+      "action": "Obtain sign-off on the BRD.",
       "owner": "Business Analyst / PM",
       "priority": "P1",
       "stage_gate": "TG0 (Design)",
       "deliverable": "BRD Sign-off",
-      "estimated_effort": "Small"
+      "estimated_effort": "Medium (1-3 days)"
     },
     {
-      "action": "Develop Training & Process Awareness Documentation.",
-      "owner": "PM",
-      "priority": "P1",
-      "stage_gate": "TG1 (Implementation)",
-      "deliverable": "Training & Process Awareness Documentation",
-      "estimated_effort": "Large"
-    },
-    {
-      "action": "Finalize and document comprehensive Security & Access Control measures.",
-      "owner": "Engineering",
-      "priority": "P2",
-      "stage_gate": "TG1 (Implementation)",
-      "deliverable": "Security & Access Control Documentation",
-      "estimated_effort": "Medium"
-    },
-    {
-      "action": "Confirm occurrence of Client Kickoff / Scope Presentation and document outcomes if not already done.",
-      "owner": "PM",
-      "priority": "P2",
-      "stage_gate": "TG-1 (Initiation)",
-      "deliverable": "Client Kickoff / Scope Presentation",
-      "estimated_effort": "Small"
-    },
-    {
-      "action": "Develop Implementation / Transition Workbook.",
+      "action": "Develop an implementation workbook.",
       "owner": "PM / Engineering",
-      "priority": "P1",
+      "priority": "P2",
       "stage_gate": "TG1 (Implementation)",
       "deliverable": "Implementation / Transition Workbook",
-      "estimated_effort": "Large"
+      "estimated_effort": "Medium (1-3 days)"
     },
     {
-      "action": "Create comprehensive Configuration Documentation.",
+      "action": "Create configuration documentation.",
       "owner": "Engineering",
       "priority": "P1",
       "stage_gate": "TG1 (Implementation)",
       "deliverable": "Configuration Documentation",
-      "estimated_effort": "Large"
+      "estimated_effort": "Large (3+ days)"
     },
     {
-      "action": "Develop Mailroom / Workflow Configuration details.",
+      "action": "Develop reporting requirements and SLA documentation.",
+      "owner": "PM",
+      "priority": "P2",
+      "stage_gate": "TG1 (Implementation)",
+      "deliverable": "Reporting Requirements & SLA Documentation",
+      "estimated_effort": "Medium (1-3 days)"
+    },
+    {
+      "action": "Create mailroom/workflow configuration documentation.",
       "owner": "Engineering",
       "priority": "P1",
       "stage_gate": "TG1 (Implementation)",
       "deliverable": "Mailroom / Workflow Configuration",
-      "estimated_effort": "Large"
+      "estimated_effort": "Large (3+ days)"
     },
     {
-      "action": "Develop Eligibility & Claims Configuration details.",
+      "action": "Develop eligibility and claims configuration documentation.",
       "owner": "Engineering",
       "priority": "P1",
       "stage_gate": "TG1 (Implementation)",
       "deliverable": "Eligibility & Claims Configuration",
-      "estimated_effort": "Large"
+      "estimated_effort": "Large (3+ days)"
     },
     {
-      "action": "Prepare Functional & Volume Testing Evidence.",
+      "action": "Create a UAT plan and test cases.",
+      "owner": "Engineering / PM",
+      "priority": "P1",
+      "stage_gate": "TG2 (Test)",
+      "deliverable": "UAT Plan & Test Cases",
+      "estimated_effort": "Large (3+ days)"
+    },
+    {
+      "action": "Obtain UAT sign-off and document testing evidence.",
+      "owner": "Engineering",
+      "priority": "P1",
+      "stage_gate": "TG2 (Test)",
+      "deliverable": "UAT Sign-off / Testing Evidence",
+      "estimated_effort": "Large (3+ days)"
+    },
+    {
+      "action": "Develop a TPM/compliance checklist.",
+      "owner": "PM / Engineer",
+      "priority": "P1",
+      "stage_gate": "TG2 (Test)",
+      "deliverable": "TPM / Compliance Checklist",
+      "estimated_effort": "Medium (1-3 days)"
+    },
+    {
+      "action": "Document functional and volume testing evidence.",
       "owner": "Engineering",
       "priority": "P1",
       "stage_gate": "TG2 (Test)",
       "deliverable": "Functional & Volume Testing Evidence",
-      "estimated_effort": "Medium"
+      "estimated_effort": "Large (3+ days)"
+    },
+    {
+      "action": "Obtain Go-Live sign-off.",
+      "owner": "PM / Tech Lead",
+      "priority": "P1",
+      "stage_gate": "TG3 (Deploy/Warranty)",
+      "deliverable": "M2P / Go-Live Sign-off",
+      "estimated_effort": "Medium (1-3 days)"
+    },
+    {
+      "action": "Develop a post-Go-Live warranty checklist.",
+      "owner": "PM",
+      "priority": "P2",
+      "stage_gate": "TG3 (Deploy/Warranty)",
+      "deliverable": "Post-Go-Live Warranty Checklist",
+      "estimated_effort": "Medium (1-3 days)"
+    },
+    {
+      "action": "Create a lessons learned document.",
+      "owner": "PM",
+      "priority": "P3",
+      "stage_gate": "TG3 (Deploy/Warranty)",
+      "deliverable": "Lessons Learned Document",
+      "estimated_effort": "Medium (1-3 days)"
+    },
+    {
+      "action": "Document the final client documentation handoff.",
+      "owner": "PM",
+      "priority": "P1",
+      "stage_gate": "TG3 (Deploy/Warranty)",
+      "deliverable": "Final Client Documentation Handoff",
+      "estimated_effort": "Medium (1-3 days)"
     }
   ],
   "readiness_assessment": {
     "overall_readiness": "RED",
-    "next_gate": "TG0 (Design)",
+    "next_gate": "TG-1 (Initiation)",
     "blockers_to_advance": [
-      "BRD Sign-off (v0.1 is incomplete and has placeholders)",
-      "Finalized Workflow / Process Flow Diagram (current is illustrative)",
-      "Technical Design Specification",
-      "Data Mapping Document",
-      "Configuration Documentation (Mailroom, Workflow, Eligibility & Claims)",
-      "Reporting Requirements & SLA Documentation"
+      "Completion of the Business Requirements Document (BRD)",
+      "Client Kickoff / Scope Presentation",
+      "Security & Access Control Documentation"
     ],
     "quick_wins": [
-      "Confirm occurrence and document outcomes of Client Kickoff / Scope Presentation.",
-      "Begin populating the BRD with specific client responsibilities for pre-scan preparation."
+      "Expand the High-Level Project Plan to include detailed tasks and deadlines",
+      "Develop training materials for user adoption"
     ],
-    "executive_summary": "The ABC Corporation Virtual Mailroom project is currently in the Design (TG0) phase, with significant gaps in foundational documentation. The BRD is an early draft (v0.1) with critical placeholders, and key design documents like the Technical Design Specification and Data Mapping are missing. High-priority risks include the lack of defined client responsibilities and incomplete workflow specifications. To advance, the immediate focus must be on finalizing the BRD, completing core design documents, and defining reporting requirements and SLAs. Without these, proceeding to implementation and testing will be blocked."
+    "executive_summary": "The project is currently in a RED state due to significant gaps in foundational documentation, particularly the Business Requirements Document (BRD) and security documentation. Immediate action is required to complete these documents to align with project goals and timelines. The next steps involve scheduling a client kickoff meeting and developing essential documentation to facilitate progress."
   },
   "metrics": {
-    "total_documents": 4,
-    "successfully_parsed": 4,
-    "coverage_score": 42,
-    "total_gaps": 7,
-    "high_risk_gaps": 4,
+    "total_documents": 2,
+    "successfully_parsed": 2,
+    "coverage_score": 10,
+    "total_gaps": 22,
+    "high_risk_gaps": 12,
     "stage_gate_completion": {
-      "TG-1": 1,
+      "TG-1": 20,
       "TG0": 0,
       "TG1": 0,
       "TG2": 0,
@@ -960,204 +914,220 @@
   },
   "gate_decisions": {
     "TG-1": {
-      "decision": "CONDITIONAL",
-      "confidence_score": 45,
-      "rationale": "Partial readiness at 45%. 4 blocker(s) remain: Business Requirements Document (BRD), Client Kickoff / Scope Presentation, Security & Access Control Documentation. Gate passage is possible once these items are addressed.",
-      "completion_pct": 40,
+      "decision": "NO-GO",
+      "confidence_score": 87,
+      "rationale": "Readiness score is 13% \u2014 well below the threshold. 4 deliverable(s) are MISSING: Business Requirements Document (BRD), Client Kickoff / Scope Presentation, Security & Access Control Documentation. Significant work is needed before this gate can be considered.",
+      "completion_pct": 10,
       "blockers": [
         {
           "deliverable": "Business Requirements Document (BRD)",
-          "status": "PARTIAL",
+          "status": "MISSING",
           "owner": "Business Analyst",
-          "effort": "Large",
-          "notes": "The BRD v0.1 exists but is incomplete, containing placeholders for critical client responsibilities and lacking details on reporting requirements and SLAs. It serves as a foundation but requires significant updates and sign-off."
+          "effort": "Large (3+ days)",
+          "notes": "The BRD is largely empty and lacks defined business requirements. It needs to be completed to move forward."
         },
         {
           "deliverable": "High-Level Project Plan / Critical Path",
-          "status": "PRESENT",
+          "status": "PARTIAL",
           "owner": "PM",
-          "effort": "Small",
-          "notes": "A detailed project plan outlining phases, timelines, and key activities is provided. It includes estimated durations and highlights overlapping tasks, serving as a clear roadmap for the project."
+          "effort": "Medium (1-3 days)",
+          "notes": "The project plan outlines the timeline but lacks detailed task descriptions. It needs to be expanded to provide clarity."
         },
         {
           "deliverable": "Client Kickoff / Scope Presentation",
           "status": "MISSING",
           "owner": "PM",
-          "effort": "Medium",
-          "notes": "While the project plan implies initiation activities like SOW sign-off and discovery sessions, there is no explicit documentation or mention of a formal client kickoff meeting or scope presentation within the provided documents."
+          "effort": "Medium (1-3 days)",
+          "notes": "No evidence of a kickoff meeting or scope presentation has been documented. This is essential for stakeholder alignment."
         },
         {
           "deliverable": "Security & Access Control Documentation",
-          "status": "PARTIAL",
+          "status": "MISSING",
           "owner": "Engineering",
-          "effort": "Medium",
-          "notes": "The BRD mentions SFTP connectivity details including URL, username, port, and SSH key, and IP whitelisting. However, comprehensive security and access control documentation beyond these SFTP specifics is not evident."
+          "effort": "Large (3+ days)",
+          "notes": "No documentation regarding security and access controls has been provided. This is critical for compliance."
         },
         {
           "deliverable": "Training & Process Awareness Documentation",
           "status": "MISSING",
           "owner": "PM",
-          "effort": "Large",
-          "notes": "There is no mention or evidence of training materials or process awareness documentation within the provided files. This is a critical deliverable for client adoption and operational handover."
-        }
-      ],
-      "blockers_met": 1,
-      "blockers_remaining": 4,
-      "optional_gaps": [
-        {
-          "deliverable": "No formal Client Kickoff / Scope Presentation documented.",
-          "status": "MISSING",
-          "effort": "Medium (1-3 days)"
-        }
-      ],
-      "high_risk_gaps": [],
-      "suggested_delay": "2-4 weeks"
-    },
-    "TG0": {
-      "decision": "NO-GO",
-      "confidence_score": 74,
-      "rationale": "Readiness score is 26% \u2014 well below the threshold. 3 deliverable(s) are MISSING: Data Mapping Document, Technical Design Specification, BRD Sign-off. Significant work is needed before this gate can be considered.",
-      "completion_pct": 12,
-      "blockers": [
-        {
-          "deliverable": "Workflow / Process Flow Diagram",
-          "status": "PARTIAL",
-          "owner": "Engineering",
-          "effort": "Medium",
-          "notes": "Multiple workflow diagrams are provided, illustrating various aspects of the process. However, the diagrams are explicitly marked as 'illustrative' and not the definitive 'Proposed Solution', indicating they are a starting point but not a final design."
-        },
-        {
-          "deliverable": "Data Mapping Document",
-          "status": "MISSING",
-          "owner": "Engineering",
-          "effort": "Large",
-          "notes": "No data mapping document is present. While the BRD mentions input/output file specifications and the project plan lists 'Sync-up on Input and Output file specifications', the actual mapping details are missing."
-        },
-        {
-          "deliverable": "Technical Design Specification",
-          "status": "MISSING",
-          "owner": "Engineering",
-          "effort": "Large",
-          "notes": "The BRD provides some technical details for SFTP connectivity and client-performed scanning integration. The WF Diagram offers a high-level process flow. However, a comprehensive Technical Design Specification detailing system architecture, integrations, and specific configurations is not present."
-        },
-        {
-          "deliverable": "BRD Sign-off",
-          "status": "MISSING",
-          "owner": "Business Analyst / PM",
-          "effort": "Small",
-          "notes": "The BRD is version v0.1 and contains placeholders, indicating it is not finalized. There is no evidence of client sign-off on the BRD."
-        }
-      ],
-      "blockers_met": 0,
-      "blockers_remaining": 4,
-      "optional_gaps": [],
-      "high_risk_gaps": [
-        "BRD v0.1 contains placeholders for critical client responsibilities regarding pre-scan document preparation and indexing (e.g., document separation, identification, sorting).",
-        "Lack of detailed Technical Design Specification, Data Mapping Document, and finalized Workflow/Process Flow Diagram."
-      ],
-      "suggested_delay": "3-6 weeks"
-    },
-    "TG1": {
-      "decision": "NO-GO",
-      "confidence_score": 81,
-      "rationale": "Readiness score is 19% \u2014 well below the threshold. 5 deliverable(s) are MISSING: Implementation / Transition Workbook, Configuration Documentation, Reporting Requirements & SLA Documentation. Significant work is needed before this gate can be considered.",
-      "completion_pct": 0,
-      "blockers": [
-        {
-          "deliverable": "Implementation / Transition Workbook",
-          "status": "MISSING",
-          "owner": "PM / Engineering",
-          "effort": "Large",
-          "notes": "No implementation or transition workbook is mentioned or provided. This is a key document for detailing the steps and responsibilities for moving from design to production."
-        },
-        {
-          "deliverable": "Configuration Documentation",
-          "status": "MISSING",
-          "owner": "Engineering",
-          "effort": "Large",
-          "notes": "The BRD provides some configuration details for SFTP connectivity and intake folder structures. However, comprehensive configuration documentation for mailroom, workflow, and other system settings is not present."
-        },
-        {
-          "deliverable": "Reporting Requirements & SLA Documentation",
-          "status": "MISSING",
-          "owner": "PM",
-          "effort": "Medium",
-          "notes": "The Project Plan mentions 'Client access, Reporting Requirement and SLA' as a task, but no specific documentation detailing these requirements or SLAs is provided."
-        },
-        {
-          "deliverable": "Mailroom / Workflow Configuration",
-          "status": "MISSING",
-          "owner": "Engineering",
-          "effort": "Large",
-          "notes": "The WF Diagram provides a high-level overview of the workflow, and the BRD outlines intake channels and SFTP structure. However, detailed configuration specifications for the mailroom and specific workflow rules are not present."
-        },
-        {
-          "deliverable": "Eligibility & Claims Configuration",
-          "status": "MISSING",
-          "owner": "Engineering",
-          "effort": "Large",
-          "notes": "The BRD mentions 'Eligibility Matching' in the context of workflow and lists 'Sample Files: One week\u2019s worth of each document type (e.g., claims, EOBs, correspondence)' and 'Eligibility & Provider Files: Current format/layout and sample data' as critical early deliverables. However, specific configuration details for eligibility and claims processing are not provided."
+          "effort": "Medium (1-3 days)",
+          "notes": "No training materials or process awareness documentation has been created. This is necessary for user adoption."
         }
       ],
       "blockers_met": 0,
       "blockers_remaining": 5,
       "optional_gaps": [
         {
-          "deliverable": "No evidence of Training & Process Awareness Documentation.",
+          "deliverable": "High-Level Project Plan lacks detailed task descriptions.",
           "status": "MISSING",
           "effort": "Medium (1-3 days)"
         },
         {
-          "deliverable": "Security & Access Control Documentation beyond SFTP specifics is not comprehensive.",
+          "deliverable": "No Training & Process Awareness Documentation has been created.",
           "status": "MISSING",
           "effort": "Medium (1-3 days)"
         }
       ],
       "high_risk_gaps": [
-        "Reporting Requirements & SLA Documentation is missing."
+        "Business Requirements Document (BRD) is largely empty and lacks defined business requirements.",
+        "No Client Kickoff / Scope Presentation has been documented.",
+        "No Security & Access Control Documentation has been provided."
       ],
       "suggested_delay": "1-2 months"
     },
-    "TG2": {
+    "TG0": {
       "decision": "NO-GO",
-      "confidence_score": 85,
-      "rationale": "Readiness score is 15% \u2014 well below the threshold. 4 deliverable(s) are MISSING: UAT Plan & Test Cases, UAT Sign-off / Testing Evidence, TPM / Compliance Checklist. Significant work is needed before this gate can be considered.",
+      "confidence_score": 100,
+      "rationale": "Readiness score is 0% \u2014 well below the threshold. 4 deliverable(s) are MISSING: Workflow / Process Flow Diagram, Data Mapping Document, Technical Design Specification. Significant work is needed before this gate can be considered.",
       "completion_pct": 0,
       "blockers": [
         {
-          "deliverable": "UAT Plan & Test Cases",
-          "status": "MISSING",
-          "owner": "Engineering / PM",
-          "effort": "Large",
-          "notes": "The Project Plan mentions 'Preparing test cases and samples' (10 days) and 'UAT by client' (10 days) within the Testing phase. However, a formal UAT Plan and specific test cases are not provided."
-        },
-        {
-          "deliverable": "UAT Sign-off / Testing Evidence",
+          "deliverable": "Workflow / Process Flow Diagram",
           "status": "MISSING",
           "owner": "Engineering",
-          "effort": "Medium",
-          "notes": "As UAT is planned but no plan or test cases exist, there is no evidence of UAT sign-off or testing evidence."
+          "effort": "Large (3+ days)",
+          "notes": "No workflow diagrams have been created. This is essential for visualizing the process."
         },
         {
-          "deliverable": "TPM / Compliance Checklist",
-          "status": "MISSING",
-          "owner": "PM / Engineer",
-          "effort": "Medium",
-          "notes": "There is no mention or evidence of a TPM or compliance checklist within the provided documents."
-        },
-        {
-          "deliverable": "Functional & Volume Testing Evidence",
+          "deliverable": "Data Mapping Document",
           "status": "MISSING",
           "owner": "Engineering",
-          "effort": "Medium",
-          "notes": "The Project Plan lists 'Functional testing of non-claims' and 'Volume testing' as activities. However, no specific evidence or documentation of these tests having been performed or their results is provided."
+          "effort": "Large (3+ days)",
+          "notes": "No data mapping documentation has been provided. This is critical for ensuring data flows correctly."
+        },
+        {
+          "deliverable": "Technical Design Specification",
+          "status": "MISSING",
+          "owner": "Engineering",
+          "effort": "Large (3+ days)",
+          "notes": "No technical design specifications have been documented. This is necessary for guiding development."
+        },
+        {
+          "deliverable": "BRD Sign-off",
+          "status": "MISSING",
+          "owner": "Business Analyst / PM",
+          "effort": "Medium (1-3 days)",
+          "notes": "No sign-off on the BRD has been documented. This is essential for moving forward."
         }
       ],
       "blockers_met": 0,
       "blockers_remaining": 4,
       "optional_gaps": [],
       "high_risk_gaps": [
-        "Absence of formal UAT Plan & Test Cases."
+        "No Workflow / Process Flow Diagram has been created.",
+        "No Data Mapping Document has been provided.",
+        "No Technical Design Specification has been documented.",
+        "No BRD Sign-off has been documented."
+      ],
+      "suggested_delay": "1-2 months"
+    },
+    "TG1": {
+      "decision": "NO-GO",
+      "confidence_score": 100,
+      "rationale": "Readiness score is 0% \u2014 well below the threshold. 5 deliverable(s) are MISSING: Implementation / Transition Workbook, Configuration Documentation, Reporting Requirements & SLA Documentation. Significant work is needed before this gate can be considered.",
+      "completion_pct": 0,
+      "blockers": [
+        {
+          "deliverable": "Implementation / Transition Workbook",
+          "status": "MISSING",
+          "owner": "PM / Engineering",
+          "effort": "Medium (1-3 days)",
+          "notes": "No implementation workbook has been created. This is necessary for tracking implementation tasks."
+        },
+        {
+          "deliverable": "Configuration Documentation",
+          "status": "MISSING",
+          "owner": "Engineering",
+          "effort": "Large (3+ days)",
+          "notes": "No configuration documentation has been provided. This is critical for system setup."
+        },
+        {
+          "deliverable": "Reporting Requirements & SLA Documentation",
+          "status": "MISSING",
+          "owner": "PM",
+          "effort": "Medium (1-3 days)",
+          "notes": "No reporting requirements or SLA documentation has been created. This is necessary for performance tracking."
+        },
+        {
+          "deliverable": "Mailroom / Workflow Configuration",
+          "status": "MISSING",
+          "owner": "Engineering",
+          "effort": "Large (3+ days)",
+          "notes": "No mailroom configuration documentation has been provided. This is critical for system functionality."
+        },
+        {
+          "deliverable": "Eligibility & Claims Configuration",
+          "status": "MISSING",
+          "owner": "Engineering",
+          "effort": "Large (3+ days)",
+          "notes": "No eligibility and claims configuration documentation has been provided. This is necessary for claims processing."
+        }
+      ],
+      "blockers_met": 0,
+      "blockers_remaining": 5,
+      "optional_gaps": [
+        {
+          "deliverable": "No Implementation / Transition Workbook has been created.",
+          "status": "MISSING",
+          "effort": "Medium (1-3 days)"
+        },
+        {
+          "deliverable": "No Reporting Requirements & SLA Documentation has been created.",
+          "status": "MISSING",
+          "effort": "Medium (1-3 days)"
+        }
+      ],
+      "high_risk_gaps": [
+        "No Configuration Documentation has been provided.",
+        "No Mailroom / Workflow Configuration documentation has been provided.",
+        "No Eligibility & Claims Configuration documentation has been provided."
+      ],
+      "suggested_delay": "1-2 months"
+    },
+    "TG2": {
+      "decision": "NO-GO",
+      "confidence_score": 100,
+      "rationale": "Readiness score is 0% \u2014 well below the threshold. 4 deliverable(s) are MISSING: UAT Plan & Test Cases, UAT Sign-off / Testing Evidence, TPM / Compliance Checklist. Significant work is needed before this gate can be considered.",
+      "completion_pct": 0,
+      "blockers": [
+        {
+          "deliverable": "UAT Plan & Test Cases",
+          "status": "MISSING",
+          "owner": "Engineering / PM",
+          "effort": "Large (3+ days)",
+          "notes": "No UAT plan or test cases have been documented. This is essential for validating the implementation."
+        },
+        {
+          "deliverable": "UAT Sign-off / Testing Evidence",
+          "status": "MISSING",
+          "owner": "Engineering",
+          "effort": "Large (3+ days)",
+          "notes": "No UAT sign-off or testing evidence has been documented. This is critical for project validation."
+        },
+        {
+          "deliverable": "TPM / Compliance Checklist",
+          "status": "MISSING",
+          "owner": "PM / Engineer",
+          "effort": "Medium (1-3 days)",
+          "notes": "No compliance checklist has been created. This is necessary for ensuring regulatory adherence."
+        },
+        {
+          "deliverable": "Functional & Volume Testing Evidence",
+          "status": "MISSING",
+          "owner": "Engineering",
+          "effort": "Large (3+ days)",
+          "notes": "No functional or volume testing evidence has been documented. This is critical for validating system performance."
+        }
+      ],
+      "blockers_met": 0,
+      "blockers_remaining": 4,
+      "optional_gaps": [],
+      "high_risk_gaps": [
+        "No UAT Plan & Test Cases have been documented.",
+        "No UAT Sign-off / Testing Evidence has been documented.",
+        "No TPM / Compliance Checklist has been created.",
+        "No Functional & Volume Testing Evidence has been documented."
       ],
       "suggested_delay": "1-2 months"
     },
@@ -1171,80 +1141,123 @@
           "deliverable": "M2P / Go-Live Sign-off",
           "status": "MISSING",
           "owner": "PM / Tech Lead",
-          "effort": "Small",
-          "notes": "As the project appears to be in the Design phase with many implementation and testing deliverables missing, there is no evidence of a Go-Live sign-off."
+          "effort": "Medium (1-3 days)",
+          "notes": "No Go-Live sign-off has been documented. This is essential for project closure."
         },
         {
           "deliverable": "Post-Go-Live Warranty Checklist",
           "status": "MISSING",
           "owner": "PM",
-          "effort": "Small",
-          "notes": "No documentation related to post-go-live warranty or checklists is available."
+          "effort": "Medium (1-3 days)",
+          "notes": "No post-Go-Live warranty checklist has been created. This is necessary for ensuring ongoing support."
         },
         {
           "deliverable": "Lessons Learned Document",
           "status": "MISSING",
           "owner": "PM",
-          "effort": "Small",
-          "notes": "This deliverable is for post-deployment. As the project is in the design phase, no lessons learned document would exist yet."
+          "effort": "Medium (1-3 days)",
+          "notes": "No lessons learned document has been created. This is important for future projects."
         },
         {
           "deliverable": "Final Client Documentation Handoff",
           "status": "MISSING",
           "owner": "PM",
-          "effort": "Medium",
-          "notes": "This is a final deliverable. Given the project's current stage and numerous missing items, this is not yet available."
+          "effort": "Medium (1-3 days)",
+          "notes": "No final documentation handoff has been documented. This is critical for project closure."
         }
       ],
       "blockers_met": 0,
       "blockers_remaining": 4,
-      "optional_gaps": [],
-      "high_risk_gaps": [],
+      "optional_gaps": [
+        {
+          "deliverable": "No Post-Go-Live Warranty Checklist has been created.",
+          "status": "MISSING",
+          "effort": "Medium (1-3 days)"
+        },
+        {
+          "deliverable": "No Lessons Learned Document has been created.",
+          "status": "MISSING",
+          "effort": "Medium (1-3 days)"
+        }
+      ],
+      "high_risk_gaps": [
+        "No M2P / Go-Live Sign-off has been documented.",
+        "No Final Client Documentation Handoff has been documented."
+      ],
       "suggested_delay": "1-2 months"
     }
   },
   "pipeline_metadata": {
-    "generated_at": "2026-03-31T15:44:40.708229",
-    "source_directory": "C:\\Users\\theti\\OneDrive\\Desktop\\SDS Capstone\\SDS Capstone Code\\red_duke_demo\\downloads",
-    "total_chunks": 52,
-    "total_tokens": 11197,
+    "generated_at": "2026-04-21T11:42:37.109572",
+    "source_directory": "C:\\Users\\kevin\\Smart-Data-Solutions-Capstone\\red_duke_demo\\sample_data",
+    "total_chunks": 1,
+    "total_tokens": 14,
     "parse_failures": 0
+  },
+  "cross_document_intel": {
+    "cross_document_issues": [],
+    "cross_reference_matrix": [
+      {
+        "document_a": "MY_Insurance_-_High-Level_Critical_Path_Project_Plan.docx",
+        "document_b": "MY_Insurance_25082_BRD_v0_1.docx",
+        "relationship": "duplicates",
+        "details": "Both documents pertain to the DEF Insurance project but lack specific details to clarify their relationship or any potential overlaps in content."
+      }
+    ],
+    "consistency_score": 100,
+    "summary": "The documents are related to the same project but do not provide enough detail to assess their consistency fully. The biggest risk is the lack of clarity on project scope and deliverables, which could lead to misalignment in implementation.",
+    "total_issues": 0,
+    "high_severity_count": 0,
+    "medium_severity_count": 0,
+    "low_severity_count": 0,
+    "entity_extraction": {
+      "MY_Insurance_-_High-Level_Critical_Path_Project_Plan.docx": {
+        "fields": [],
+        "dates": [],
+        "metrics": []
+      },
+      "MY_Insurance_25082_BRD_v0_1.docx": {
+        "fields": [],
+        "dates": [],
+        "metrics": []
+      }
+    }
   },
   "stage_readiness": {
     "TG-1": {
       "gate": "TG-1 (Initiation)",
-      "completeness": 40,
-      "quality": 46,
-      "consistency": 57,
-      "freshness": 37,
-      "readiness": 45,
+      "completeness": 10,
+      "quality": 13,
+      "consistency": 19,
+      "freshness": 14,
+      "readiness": 13,
       "item_count": 5
     },
     "TG0": {
       "gate": "TG0 (Design)",
-      "completeness": 14,
-      "quality": 17,
-      "consistency": 48,
-      "freshness": 42,
-      "readiness": 26,
+      "completeness": 0,
+      "quality": 0,
+      "consistency": 0,
+      "freshness": 0,
+      "readiness": 0,
       "item_count": 4
     },
     "TG1": {
       "gate": "TG1 (Implementation)",
       "completeness": 0,
       "quality": 0,
-      "consistency": 57,
-      "freshness": 51,
-      "readiness": 19,
+      "consistency": 0,
+      "freshness": 0,
+      "readiness": 0,
       "item_count": 5
     },
     "TG2": {
       "gate": "TG2 (Test)",
       "completeness": 0,
       "quality": 0,
-      "consistency": 48,
-      "freshness": 35,
-      "readiness": 15,
+      "consistency": 0,
+      "freshness": 0,
+      "readiness": 0,
       "item_count": 4
     },
     "TG3": {
@@ -1259,13 +1272,13 @@
   },
   "proactive_actions": [
     {
-      "action": "Create Data Mapping Document",
+      "action": "Create Client Kickoff / Scope Presentation",
       "type": "create_deliverable",
-      "deliverable": "Data Mapping Document",
-      "stage_gate": "TG0 (Design)",
-      "owner": "Engineering",
-      "impact_score": 135,
-      "effort": "Large",
+      "deliverable": "Client Kickoff / Scope Presentation",
+      "stage_gate": "TG-1 (Initiation)",
+      "owner": "PM",
+      "impact_score": 140,
+      "effort": "Medium (1-3 days)",
       "reason": "This deliverable is MISSING and blocks the stage gate.",
       "can_generate_draft": true,
       "rank": 1
@@ -1276,47 +1289,23 @@
       "deliverable": "BRD Sign-off",
       "stage_gate": "TG0 (Design)",
       "owner": "Business Analyst / PM",
-      "impact_score": 135,
-      "effort": "Small",
+      "impact_score": 140,
+      "effort": "Medium (1-3 days)",
       "reason": "This deliverable is MISSING and blocks the stage gate.",
       "can_generate_draft": true,
       "rank": 2
     },
     {
-      "action": "Create Implementation / Transition Workbook",
+      "action": "Create TPM / Compliance Checklist",
       "type": "create_deliverable",
-      "deliverable": "Implementation / Transition Workbook",
-      "stage_gate": "TG1 (Implementation)",
-      "owner": "PM / Engineering",
-      "impact_score": 135,
-      "effort": "Large",
+      "deliverable": "TPM / Compliance Checklist",
+      "stage_gate": "TG2 (Test)",
+      "owner": "PM / Engineer",
+      "impact_score": 140,
+      "effort": "Medium (1-3 days)",
       "reason": "This deliverable is MISSING and blocks the stage gate.",
       "can_generate_draft": true,
       "rank": 3
-    },
-    {
-      "action": "Create Reporting Requirements & SLA Documentation",
-      "type": "create_deliverable",
-      "deliverable": "Reporting Requirements & SLA Documentation",
-      "stage_gate": "TG1 (Implementation)",
-      "owner": "PM",
-      "impact_score": 135,
-      "effort": "Medium",
-      "reason": "This deliverable is MISSING and blocks the stage gate.",
-      "can_generate_draft": true,
-      "rank": 4
-    },
-    {
-      "action": "Create UAT Sign-off / Testing Evidence",
-      "type": "create_deliverable",
-      "deliverable": "UAT Sign-off / Testing Evidence",
-      "stage_gate": "TG2 (Test)",
-      "owner": "Engineering",
-      "impact_score": 135,
-      "effort": "Medium",
-      "reason": "This deliverable is MISSING and blocks the stage gate.",
-      "can_generate_draft": true,
-      "rank": 5
     },
     {
       "action": "Create M2P / Go-Live Sign-off",
@@ -1324,70 +1313,94 @@
       "deliverable": "M2P / Go-Live Sign-off",
       "stage_gate": "TG3 (Deploy/Warranty)",
       "owner": "PM / Tech Lead",
+      "impact_score": 140,
+      "effort": "Medium (1-3 days)",
+      "reason": "This deliverable is MISSING and blocks the stage gate.",
+      "can_generate_draft": true,
+      "rank": 4
+    },
+    {
+      "action": "Create Final Client Documentation Handoff",
+      "type": "create_deliverable",
+      "deliverable": "Final Client Documentation Handoff",
+      "stage_gate": "TG3 (Deploy/Warranty)",
+      "owner": "PM",
+      "impact_score": 140,
+      "effort": "Medium (1-3 days)",
+      "reason": "This deliverable is MISSING and blocks the stage gate.",
+      "can_generate_draft": true,
+      "rank": 5
+    },
+    {
+      "action": "Create Business Requirements Document (BRD)",
+      "type": "create_deliverable",
+      "deliverable": "Business Requirements Document (BRD)",
+      "stage_gate": "TG-1 (Initiation)",
+      "owner": "Business Analyst",
       "impact_score": 135,
-      "effort": "Small",
+      "effort": "Large (3+ days)",
       "reason": "This deliverable is MISSING and blocks the stage gate.",
       "can_generate_draft": true,
       "rank": 6
     },
     {
-      "action": "Create Training & Process Awareness Documentation",
+      "action": "Create Security & Access Control Documentation",
       "type": "create_deliverable",
-      "deliverable": "Training & Process Awareness Documentation",
+      "deliverable": "Security & Access Control Documentation",
       "stage_gate": "TG-1 (Initiation)",
-      "owner": "PM",
-      "impact_score": 95,
-      "effort": "Large",
-      "reason": "This deliverable is MISSING and is needed for complete coverage.",
+      "owner": "Engineering",
+      "impact_score": 135,
+      "effort": "Large (3+ days)",
+      "reason": "This deliverable is MISSING and blocks the stage gate.",
       "can_generate_draft": true,
       "rank": 7
     },
     {
-      "action": "Complete Business Requirements Document (BRD)",
-      "type": "complete_deliverable",
-      "deliverable": "Business Requirements Document (BRD)",
-      "stage_gate": "TG-1 (Initiation)",
-      "owner": "Business Analyst",
-      "impact_score": 90,
-      "effort": "Large",
-      "reason": "Readiness score is 68%. The BRD v0.1 exists but is incomplete, containing placeholders for critical client responsibilities and lacking details on reporting requirements and SLAs. It serves as a foundation but requires significant updates and sign-off.",
+      "action": "Create Workflow / Process Flow Diagram",
+      "type": "create_deliverable",
+      "deliverable": "Workflow / Process Flow Diagram",
+      "stage_gate": "TG0 (Design)",
+      "owner": "Engineering",
+      "impact_score": 135,
+      "effort": "Large (3+ days)",
+      "reason": "This deliverable is MISSING and blocks the stage gate.",
       "can_generate_draft": true,
       "rank": 8
     },
     {
-      "action": "Complete Workflow / Process Flow Diagram",
-      "type": "complete_deliverable",
-      "deliverable": "Workflow / Process Flow Diagram",
+      "action": "Create Data Mapping Document",
+      "type": "create_deliverable",
+      "deliverable": "Data Mapping Document",
       "stage_gate": "TG0 (Design)",
       "owner": "Engineering",
-      "impact_score": 88,
-      "effort": "Medium",
-      "reason": "Readiness score is 72%. Multiple workflow diagrams are provided, illustrating various aspects of the process. However, the diagrams are explicitly marked as 'illustrative' and not the definitive 'Proposed Solution', indicating they are a starting point but not a final design.",
+      "impact_score": 135,
+      "effort": "Large (3+ days)",
+      "reason": "This deliverable is MISSING and blocks the stage gate.",
       "can_generate_draft": true,
       "rank": 9
     },
     {
-      "action": "Create Client Kickoff / Scope Presentation",
+      "action": "Create Technical Design Specification",
       "type": "create_deliverable",
-      "deliverable": "Client Kickoff / Scope Presentation",
-      "stage_gate": "TG-1 (Initiation)",
-      "owner": "PM",
-      "impact_score": 80,
-      "effort": "Medium",
-      "reason": "This deliverable is MISSING and is needed for complete coverage.",
+      "deliverable": "Technical Design Specification",
+      "stage_gate": "TG0 (Design)",
+      "owner": "Engineering",
+      "impact_score": 135,
+      "effort": "Large (3+ days)",
+      "reason": "This deliverable is MISSING and blocks the stage gate.",
       "can_generate_draft": true,
       "rank": 10
     }
   ],
   "project_mind": {
-    "project_understanding": "My analysis of the ABC Corporation project, specifically focusing on Phase TG0 (Design), reveals a project scope centered on automating mailroom and data capture services using the QuickClaim platform. This includes intake via SFTP, processing, digitization, and secure transmission. The core documentation analyzed includes the High-Level Critical Path Project Plan, WF Diagram, 25080 BRD v0.1, and Implementation_Documentation_Standardization_Capstone_Scope.  Collectively, these documents indicate that out of 22 total deliverables, only 1 is present, with 3 partial and a significant 12 missing. This directly contributes to 4 high-risk gaps and 7 total identified gaps within the project's current state. Despite a 100% cross-document consistency score, the project is facing significant hurdles in its design phase.",
-    "critical_insight": "The project is currently in a NO-GO state for TG0, TG1, TG2, and TG3, with a CONDITIONAL decision for TG-1, indicating a critical need to address the substantial number of missing deliverables and high-risk gaps before any meaningful forward progress can be achieved.",
-    "risk_narrative": "The most significant risk is the overwhelming number of missing deliverables (12 out of 22) and the presence of 4 high-risk gaps. These gaps, particularly those impacting core workflow configuration and data capture processes as outlined in the BRD and WF Diagram, directly block the ability to progress through design gates and ultimately implement the automated mailroom solution.",
-    "momentum_assessment": "STALLING",
-    "momentum_reason": "The project is stalling due to the critical lack of deliverables and the high-risk gaps identified in the design phase. Without these foundational elements, progress is severely impeded, and forward movement is not occurring.",
-    "predicted_bottleneck": "Deliverable: 'QuickClaim Platform Configuration Details' (implied by BRD and scope)",
-    "time_to_next_gate": "N/A (Project is currently NO-GO for all future gates)",
-    "next_actions_narrative": "Tomorrow morning, I would convene an emergency meeting with the ABC Corporation project lead and the SDS technical architect to review the 12 missing deliverables and the 4 high-risk gaps. The immediate priority would be to assign ownership and establish concrete timelines for the 'QuickClaim Platform Configuration Details' and any other critical missing components identified in the 25080 BRD v0.1."
+    "project_understanding": "The DEF Insurance project is currently in the TG-1 (Initiation) phase for the implementation of a Virtual Mailroom system aimed at improving document handling and claims processing. An analysis of the documents, specifically the 'MY_Insurance_-_High-Level_Critical_Path_Project_Plan.docx' and 'MY_Insurance_25082_BRD_v0_1.docx', reveals a concerning status: out of 22 total deliverables, there are no completed deliverables, one partial deliverable, and 21 that are missing. This indicates a significant lack of progress in the foundational elements necessary for the project's success. Furthermore, there are 16 high-risk gaps identified, which could severely impact the project's trajectory if not addressed promptly. The consistency score between the documents is perfect at 100%, suggesting that while the documents are aligned, they collectively reflect a dire situation regarding deliverables and risk management.",
+    "critical_insight": "Leadership must prioritize the immediate development and completion of the missing deliverables to avoid project failure.",
+    "risk_narrative": "The most significant risk to this project is the absence of 21 missing deliverables, particularly the critical path items outlined in the project plan. This gap blocks essential project milestones and hinders the ability to move forward effectively, jeopardizing the entire implementation timeline.",
+    "momentum_assessment": "BLOCKED",
+    "momentum_reason": "The project is currently blocked due to the overwhelming number of missing deliverables and the high-risk gaps that prevent any meaningful progress toward the next gate.",
+    "predicted_bottleneck": "The missing deliverables, specifically the critical path items outlined in the project plan, are the most likely bottleneck.",
+    "time_to_next_gate": "1-2 months",
+    "next_actions_narrative": "Tomorrow morning, I would schedule an urgent meeting with the project team to review the 'MY_Insurance_-_High-Level_Critical_Path_Project_Plan.docx' and identify specific owners for each missing deliverable. I would also request a status update from the project leads on the partial deliverable to assess its viability and timeline."
   },
-  "overall_readiness_score": 21
+  "overall_readiness_score": 3
 }
